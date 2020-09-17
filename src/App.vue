@@ -1,21 +1,27 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <router-link to="/">hello word</router-link>
-  <router-link to="o">oyy</router-link>
-  <hr />
-
-  <router-view msg="2333"></router-view>
+  <router-view />
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-import OYY from "./components/OYY.vue";
+<script lang="ts">
+import { ref, provide } from "vue";
+import { router } from "./router";
 
 export default {
-  name: 'App',
-  components: {
-    OYY,
-    HelloWorld
-  }
-}
+  name: "App",
+  setup() {
+    const width = document.documentElement.clientWidth;
+    let menuVisible = ref(width <= 500 ? false : true);
+    window.addEventListener('resize',()=>{
+      console.log('发发发');
+      const width = document.documentElement.clientWidth;
+      menuVisible = ref(width <= 500 ? false : true);
+    })
+    provide("menuVisible", menuVisible); // set
+    router.afterEach(() => {
+      if (width <= 500) {
+        menuVisible.value = false;
+      }
+    });
+  },
+};
 </script>
