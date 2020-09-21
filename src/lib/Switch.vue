@@ -1,5 +1,5 @@
 <template>
-  <button :class="{checked:value}" @click="toggle">
+  <button :class="[{'oy-checked':value},'oy-button']" @click="toggle">
     <span></span>
   </button>
 </template>
@@ -25,7 +25,7 @@
 <style lang="scss" scoped>
   $h: 22px;
   $h2: $h - 4px;
-  button {
+  .oy-button {
     cursor: pointer;
     border: none;
     border-radius: 5px;
@@ -35,7 +35,8 @@
     border-radius: $h / 2;
     outline: none;
     background-color: crimson;
-
+    user-select: none;
+    outline: none;
     span {
       position: absolute;
       top: 50%;
@@ -48,13 +49,13 @@
       transition: left 0.15s ease-in, width 0.1s ease-in, margin-left 0.1s ease-in, height 0.1s ease-in;
 
       &:hover {
-        height: $h2;
-        width: $h2 + 5px;
+        //height: $h2;
+        //width: $h2 + 5px;
       }
     }
   }
 
-  .checked {
+  .oy-checked {
     background-color: aqua;
     transition: background-color 0.25s ease-in;
 
@@ -62,7 +63,7 @@
       left: calc(100% - #{$h2} - 2px);
 
       &:hover {
-        margin-left: -5px;
+        //margin-left: -5px;
       }
     }
   }
