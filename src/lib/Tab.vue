@@ -1,5 +1,7 @@
 <template>
-
+  <div>
+    <slot/>
+  </div>
 </template>
 <script lang="ts">
 export default {
@@ -9,7 +11,7 @@ export default {
   setup() {
 
   }
-}
+};
 </script>
 <style lang="sass">
 
