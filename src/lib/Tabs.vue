@@ -2,10 +2,10 @@
   <div class="oy-tabs">
     <div class="oy-tabs-tab-group" ref="tabGroup">
       <div class="oy-tabs-slider-wrapper" ref="wrapper"></div>
-      <div :class="['oy-tabs-tab',{active: current.props.title === t}]"
+      <div :class="['oy-tabs-tab',{active: selected === t}]"
            @click="select(t)"
            v-for="(t,index) in titles" :key="index"
-           :ref="el => {divs[index] = el }"
+           :ref="el => {if(t===selected) ac_el = el }"
       >
         {{ t }}
       </div>
@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import Tab from './Tab.vue';
-import {ref, computed, onUpdated, onMounted} from 'vue';
+import {ref, computed, watchEffect, onMounted} from 'vue';
 
 export default {
   props: {
@@ -44,28 +44,26 @@ export default {
       return defaults.find(e => e.props.title === props.selected);
     });
 
-    let divs = ref<HTMLDivElement[]>([]);
+
+    let ac_el = ref<HTMLDivElement>(null);
     let wrapper = ref<HTMLDivElement>(null);
     let tabGroup = ref<HTMLDivElement>(null);
     const initWrapper = () => {
-      let ac_el = [...divs.value].find(el => el.classList.contains('active'));
-      wrapper.value.style.width = ac_el.offsetWidth + 'px';
+      wrapper.value.style.width = ac_el.value.offsetWidth + 'px';
       const {left: left1} = tabGroup.value.getBoundingClientRect();
-      const {left: left2} = ac_el.getBoundingClientRect();
+      const {left: left2} = ac_el.value.getBoundingClientRect();
       const left = left2 - left1;
       wrapper.value.style.left = left + 'px';
     };
-    onMounted(() => {
-      initWrapper();
-    });
-    onUpdated(() => {
-      initWrapper();
-    });
 
+    onMounted(() => {
+      // 单用watchEffect会在mounted之前掉用，获取不到dom，所以这里在onMounted里再使用.
+      watchEffect(initWrapper);
+    });
     return {
       tabGroup,
       wrapper,
-      divs,
+      ac_el,
       select,
       titles,
       current
@@ -93,6 +91,7 @@ $blue: rgb(94, 95, 226);
     .oy-tabs-tab {
       padding: 5px 8px;
       margin: 5px;
+
       &.active {
         color: $blue;
       }
