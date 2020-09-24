@@ -5,7 +5,7 @@
       <div class="oy-dialog-overlay" @click="closeWithOverlay"></div>
       <div class="oy-dialog-wrapper">
         <header><slot name="title" /></header>
-        <div class="content"><slot name="content" /></div>
+        <div class="oy-dialog-content"><slot name="content" /></div>
         <slot name="footer">
           <Button @click="close">取消</Button>
           <Button theme="primary">确定</Button>
@@ -70,9 +70,8 @@ export default {
     display: block;
     padding: 5px 3px;
   }
-  div.content {
+  div.oy-dialog-content {
     padding: 5px 3px;
-
   }
 }
 </style>
