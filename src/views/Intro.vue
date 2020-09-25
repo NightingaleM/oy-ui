@@ -1,6 +1,12 @@
 <template>
-  介绍
+  <article class="markdown-body" v-html="md"></article>
 </template>
-<script lang="ts">
+<script>
+import md from '../md/intro.md'
 
+export default {
+  data() {
+    return {md}
+  }
+}
 </script>
