@@ -1,7 +1,7 @@
 <template>
   <div>Dialog 示例 -1</div>
-  <Button @click="toggle2">弹窗用插槽</Button>
-  <Dialog v-model:visible="visited2">
+  <Button @click="toggle" theme="primary">弹窗用插槽</Button>
+  <Dialog v-model:visible="visited">
     <template v-slot:title>标题</template>
     <template v-slot:content>
       <p>多点</p>
@@ -28,14 +28,11 @@ export default {
     Dialog, Button
   },
   setup(props, context) {
-    let visible = ref(false);
-    let visited2 = ref(false);
+    let visited = ref(false);
     let toggle = () => {
-      visible.value = !visible.value;
+      visited.value = !visited.value;
     };
-    let toggle2 = () => {
-      visited2.value = !visited2.value;
-    };
+
     let showDialog = () => {
       OpenDialog({
         title: 'ggg',
@@ -44,10 +41,8 @@ export default {
     };
     return {
       toggle,
-      toggle2,
       showDialog,
-      visited2,
-      visible
+      visited,
     };
   },
 };
