@@ -27,6 +27,7 @@ $h: 14px;
 $h2: $h + 4px;
 $w: 34px;
 .oy-button {
+  z-index: 0;
   cursor: pointer;
   border: none;
   border-radius: 5px;
