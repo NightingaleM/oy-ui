@@ -1,17 +1,22 @@
 <template>
-<!-- teleport 让这个组件查到body下而不是引入的父组件下 -->
+  <!-- teleport 让这个组件查到body下而不是引入的父组件下 -->
   <teleport to="body">
-    <template v-if="visible">
-      <div class="oy-dialog-overlay" @click="closeWithOverlay"></div>
-      <div class="oy-dialog-wrapper">
-        <header><slot name="title" /></header>
-        <div class="oy-dialog-content"><slot name="content" /></div>
-        <slot name="footer">
-          <Button @click="close">取消</Button>
-          <Button theme="primary">确定</Button>
-        </slot>
+    <transition name="oy-dialog-animation-overlay">
+      <div v-if="visible" class="oy-dialog-overlay" @click="closeWithOverlay">
+        <div class="oy-dialog-wrapper" v-if="visible">
+          <header>
+            <slot name="title"/>
+          </header>
+          <div class="oy-dialog-content">
+            <slot name="content"/>
+          </div>
+          <slot name="footer">
+            <Button @click="close">取消</Button>
+            <Button theme="primary">确定</Button>
+          </slot>
+        </div>
       </div>
-    </template>
+    </transition>
   </teleport>
 </template>
 
@@ -28,10 +33,13 @@ export default {
       type: Boolean,
       default: false
     },
+    overlay: {
+      type: Boolean,
+      default: true
+    }
   },
   setup(props, context) {
     const close = () => {
-      console.log('ddd');
       context.emit('update:visible', !props.visible);
     };
     const closeWithOverlay = () => {
@@ -55,23 +63,48 @@ export default {
   bottom: 0;
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .oy-dialog-wrapper {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 4px;
   background-color: #fff;
   min-width: 30vw;
+  max-width: 80vw;
+  max-height: 80vh;
   z-index: 11;
+  transform-origin: 50% 50%;
+
   header {
     display: block;
     padding: 5px 3px;
   }
+
   div.oy-dialog-content {
     padding: 5px 3px;
   }
 }
+
+
+.oy-dialog-animation-overlay-enter-active,
+.oy-dialog-animation-overlay-leave-active{
+  transition: all 0.15s ease-in-out;
+
+  .oy-dialog-wrapper {
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+.oy-dialog-animation-overlay-enter-from,
+.oy-dialog-animation-overlay-leave-to {
+  opacity: 0;
+
+  .oy-dialog-wrapper {
+    transform: scale(0.5);
+  }
+}
+
+
 </style>
