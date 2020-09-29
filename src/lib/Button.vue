@@ -12,7 +12,7 @@
 </template>
 <script lang="ts">
 import {onMounted, ref} from 'vue';
-
+import waveHandle from './public_js/waveHandle'
 export default {
   inheritAttrs: false, // 标示不自动将属性传递到组件最外层元素
   props: {
@@ -48,40 +48,6 @@ export default {
   },
   setup() {
     let btn = ref<HTMLDivElement>(null);
-    const waveHandle = function ($ref) {
-      let timer1 = null;
-      let timer2 = null;
-      const downHandle = downEvent => {
-        if ([...downEvent.path[0].classList].indexOf('oy-wave') >= 0) {
-          return;
-        }
-        ;
-        let st = new Date().getTime();
-        const mouseUpHandel = (upEvent) => {
-          let et = new Date().getTime();
-          let delay = 0;
-          if (et - st < 300) {
-            delay = 300 - (et - st);
-          }
-          setTimeout(() => {
-            span.className += ' oy-wave-remove';
-            setTimeout(() => {
-              $ref.value.removeChild(span);
-            }, 150);
-          }, delay);
-          // $ref.value.removeEventListener('mouseup', mouseUpHandel);
-        };
-
-        let span = document.createElement('span');
-        span.className = 'oy-wave';
-        span.style.position = 'absolute';
-        span.style.left = downEvent.offsetX + 'px';
-        span.style.top = downEvent.offsetY + 'px';
-        $ref.value.append(span);
-        $ref.value.addEventListener('mouseup', mouseUpHandel, {once: true});
-      };
-      $ref.value.addEventListener('mousedown', downHandle);
-    };
     onMounted(() => {
       if (btn.value.disabled) return;
       waveHandle(btn);
@@ -250,32 +216,6 @@ export default {
 
   .oy-button-elevation-4 {
     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12) !important
-  }
-}
-
-.oy-wave {
-  background-color: currentColor;
-  opacity: 0.4;
-  animation: oy-wave-in 0.3s forwards ease-in;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.oy-wave-remove {
-  opacity: 0;
-  transition: opacity 0.15s;
-}
-
-@keyframes oy-wave-in {
-  0% {
-    width: 0%;
-    padding-top: 0%;
-    padding-bottom: 0%;
-  }
-  100% {
-    width: 220%;
-    padding-top: 110%;
-    padding-bottom: 110%;
   }
 }
 

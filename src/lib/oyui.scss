@@ -5,3 +5,31 @@
   font-size: 16px;
   font-family: -apple-system, "Noto Sans", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Source Han Sans CN", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
 }
+
+
+
+.oy-wave {
+  background-color: currentColor;
+  opacity: 0.4;
+  animation: oy-wave-in 0.3s forwards ease-in;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.oy-wave-remove {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+@keyframes oy-wave-in {
+  0% {
+    width: 0%;
+    padding-top: 0%;
+    padding-bottom: 0%;
+  }
+  100% {
+    width: 220%;
+    padding-top: 110%;
+    padding-bottom: 110%;
+  }
+}
