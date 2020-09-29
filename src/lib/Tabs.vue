@@ -1,13 +1,14 @@
 <template>
   <div class="oy-tabs">
-    <div class="oy-tabs-tab-group" ref="tabGroup">
-      <div class="oy-tabs-slider-wrapper" ref="wrapper"></div>
+    <div :class="['oy-tabs-tab-group',
+      `oy-tabs-tab-position-${position}`
+    ]" ref="tabGroup">
+      <div class="oy-tabs-slider-wrapper oy-tabs-slider-wrapper-init" ref="wrapper"></div>
       <div :class="['oy-tabs-tab',{active: selected === t}]"
            @click="select(t)"
            v-for="(t,index) in titles" :key="index"
-           :ref="el => {if(t===selected) ac_el = el }"
-      >
-        {{ t }}
+           :ref="el => { if(t===selected) ac_el = el }"
+      >{{ t }}
       </div>
     </div>
     <div class="oy-tabs-content">
@@ -23,6 +24,13 @@ export default {
   props: {
     selected: {
       type: String
+    },
+    position: {
+      type: String,
+      default: 'right',
+      validator(value: string): boolean {
+        return ['right', 'left', 'centered'].indexOf(value) >= 0;
+      }
     }
   },
   setup(props, context) {
@@ -43,8 +51,6 @@ export default {
     let current = computed(() => {
       return defaults.find(e => e.props.title === props.selected);
     });
-
-
     let ac_el = ref<HTMLDivElement>(null);
     let wrapper = ref<HTMLDivElement>(null);
     let tabGroup = ref<HTMLDivElement>(null);
@@ -54,6 +60,11 @@ export default {
       const {left: left2} = ac_el.value.getBoundingClientRect();
       const left = left2 - left1;
       wrapper.value.style.left = left + 'px';
+      if (wrapper.value.classList.contains('oy-tabs-slider-wrapper-init')) {
+        setTimeout(() => {
+          wrapper.value.classList.remove('oy-tabs-slider-wrapper-init');
+        }, 0);
+      }
     };
 
     onMounted(() => {
@@ -77,25 +88,45 @@ $blue: rgb(94, 95, 226);
   &-tab-group {
     position: relative;
     display: flex;
+    padding: 5px;
 
     .oy-tabs-slider-wrapper {
       position: absolute;
       height: 2px;
-      left: 0;
+      left: 10px;
       width: 50px;
       bottom: 0;
       background-color: #a0cfff;
-      transition: all 0.3s ease-in-out;
+      transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
+    }
+
+    .oy-tabs-slider-wrapper-init {
+      opacity: 0;
+      transition: none;
     }
 
     .oy-tabs-tab {
       padding: 5px 8px;
       margin: 5px;
+      cursor: pointer;
 
       &.active {
         color: $blue;
       }
     }
+  }
+
+  &-tab-position-right {
+
+  }
+
+  &-tab-position-left {
+    justify-content: flex-end;
+  }
+
+  &-tab-position-centered {
+    justify-content: center;
+
   }
 }
 </style>

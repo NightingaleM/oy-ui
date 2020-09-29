@@ -1,3 +1,10 @@
+/**
+ *
+ * @param $ref 一个ref<HTMLElement>
+ * @returns {{remove: remove}}
+ *
+ * 返回一个对象，对象里remove函数用于去除 之前元素的监听
+ */
 const waveHandle = function ($ref) {
   const downHandle = downEvent => {
     if ([...downEvent.path[0].classList].indexOf('oy-wave') >= 0) {
@@ -27,12 +34,19 @@ const waveHandle = function ($ref) {
     let span = document.createElement('span');
     span.className = 'oy-wave';
     span.style.position = 'absolute';
-    span.style.left = downEvent.offsetX + 'px';
-    span.style.top = downEvent.offsetY + 'px';
+    span.style.left = downEvent.layerX + 'px';
+    span.style.top = downEvent.layerY + 'px';
     $ref.value.append(span);
     $ref.value.addEventListener('mouseup', mouseUpHandel, {once: true});
   };
   $ref.value.addEventListener('mousedown', downHandle);
+
+  const remove = () => {
+    $ref.value.removeEventListener('mousedown', downHandle);
+  }
+  return {
+    remove
+  }
 };
 
 export default waveHandle
