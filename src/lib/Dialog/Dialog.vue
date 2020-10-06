@@ -2,8 +2,8 @@
   <!-- teleport 让这个组件查到body下而不是引入的父组件下 -->
   <teleport to="body">
     <transition name="oy-dialog-animation-overlay">
-      <div v-if="visible" class="oy-dialog-overlay" @click="closeWithOverlay">
-        <div class="oy-dialog-wrapper" v-if="visible">
+      <div v-if="visible && visibleByFunction" class="oy-dialog-overlay" @click="closeWithOverlay">
+        <div class="oy-dialog-wrapper" v-if="visible && visibleByFunction">
           <header>
             <slot name="title"/>
           </header>
@@ -36,10 +36,18 @@ export default {
     overlay: {
       type: Boolean,
       default: true
+    },
+    byFunction: {
+      type: Boolean,
+      default: false,
     }
   },
   setup(props, context) {
+    const visibleByFunction = ref(true);
     const close = () => {
+      if (props.byFunction) {
+        visibleByFunction.value = false;
+      }
       context.emit('update:visible', !props.visible);
     };
     const closeWithOverlay = () => {
@@ -48,6 +56,7 @@ export default {
       }
     };
     return {
+      visibleByFunction,
       close, closeWithOverlay
     };
   }
@@ -89,7 +98,7 @@ export default {
 
 
 .oy-dialog-animation-overlay-enter-active,
-.oy-dialog-animation-overlay-leave-active{
+.oy-dialog-animation-overlay-leave-active {
   transition: all 0.15s ease-in-out;
 
   .oy-dialog-wrapper {

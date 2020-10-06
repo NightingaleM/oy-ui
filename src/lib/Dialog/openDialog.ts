@@ -6,15 +6,17 @@ export const OpenDialog = (options) => {
   const div = document.createElement('div');
   document.body.appendChild(div);
   const close = () => {
-    app.unmount(div);
-    div.remove();
+    setTimeout(() => {
+      app.unmount(div);
+      div.remove();
+    }, 500);
   };
   let app = createApp({
     render() {
       return h(Dialog, {
         visible: true,
+        byFunction: true,
         'onUpdate:visible': (value) => {
-          console.log(value);
           if (value === false) close();
         }
       }, {
@@ -22,5 +24,5 @@ export const OpenDialog = (options) => {
       });
     }
   });
-  app.mount(div);
+  app.mount(div, true);
 };
