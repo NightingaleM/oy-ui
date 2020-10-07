@@ -17,7 +17,7 @@ export default {
   setup() {
     const value1 = ref(true);
     const value2 = ref(true);
-    const value3 = ref(false);
+    const value3 = ref(true);
     return {
       value1,
       value2,

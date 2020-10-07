@@ -1,5 +1,6 @@
 <template>
-  <button :class="[{'oy-checked':value},'oy-button']" @click="toggle">
+  <button :class="[{'oy-checked':value},'oy-button']" :disabled="disable"
+          @click="toggle">
     <span></span>
   </button>
 </template>
@@ -9,6 +10,7 @@ import {ref} from 'vue';
 export default {
   props: {
     value: Boolean,
+    disable: Boolean,
   },
   setup(props, context) {
     console.log(props.value);
@@ -84,13 +86,16 @@ $w: 34px;
 
     &:hover {
       //height: $h2;
-      //width: $h2 + 5px;
       &:before {
         width: $h2 * 1.8;
         height: $h2 * 1.8;
         background-color: rgba(0, 0, 0, 0.1);
       }
     }
+  }
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.8;
   }
 }
 
