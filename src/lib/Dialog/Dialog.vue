@@ -38,6 +38,7 @@ export default {
       default: true
     },
     byFunction: {
+      // 用于辨别是否是通过调用函数创建的组件
       type: Boolean,
       default: false,
     }
