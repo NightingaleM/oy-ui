@@ -2,16 +2,15 @@
   <div>
     Button 示例
     <br>
-    <section v-for="(item,index) in demo" :key="index">
-      <h2>{{ item.__sourceCodeTitle }}</h2>
-      <DemoCard :source-code="item.__sourceCode">
-
+    <DemoCard v-for="(item,index) in demo" :key="index"
+              :source-code="item.__sourceCode">
+      <template v-slot:title>
+        <h2>{{ item.__sourceCodeTitle }}</h2>
+      </template>
+      <template v-slot:default>
         <component :is="item"/>
-      </DemoCard>
-      <!--      <div class="source-code-box">-->
-      <!--        <pre class="language-css" v-html="Prism.highlight(item.__sourceCode,Prism.languages.html,'html')"></pre>-->
-      <!--      </div>-->
-    </section>
+      </template>
+    </DemoCard>
   </div>
 </template>
 <script lang="ts">

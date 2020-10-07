@@ -1,22 +1,33 @@
 <template>
   <!--  <div class="oy-button">-->
   <!-- $attrs 包含了所有传递过来的事件和属性，如果不手动绑定的话，将绑定到组件的最外穿元素   -->
-  <button ref="btn" :class="[theme ? 'oy-button-theme-' + theme:'',
+  <button ref="btn" :class="[
+    theme ? 'oy-button-theme-' + theme:'',
     size? 'oy-button-size-' + size:'',
     'oy-button-elevation-' + elevation,
-    outline? 'oy-button-outline' :'',
-    'oy-button-main']" v-bind="$attrs">
+    {'oy-button-outline': outline},
+    {fab:fab},
+    'oy-button-main',
+    ]" v-bind="$attrs">
     <span><slot>Button</slot></span>
   </button>
   <!--  </div>-->
 </template>
 <script lang="ts">
-import {onMounted, ref} from 'vue';
+import {nextTick, onMounted, ref} from 'vue';
 import waveHandle from './public_js/waveHandle';
 
 export default {
   inheritAttrs: false, // 标示不自动将属性传递到组件最外层元素
   props: {
+    fab: {
+      type: Boolean,
+      default: false
+    },
+    noWave: {
+      type: Boolean,
+      default: false
+    },
     outline: {
       type: Boolean,
       default: false,
@@ -47,11 +58,16 @@ export default {
       }
     }
   },
-  setup() {
+  setup(props, context) {
     let btn = ref<HTMLDivElement>(null);
     onMounted(() => {
-      if (btn.value.disabled) return;
-      waveHandle(btn);
+      if (!btn.value.disabled && !props.noWave) {
+        waveHandle(btn);
+      }
+      if (props.fab) {
+        let {width: w} = btn.value.getBoundingClientRect();
+        btn.value.style.height = w + 'px';
+      }
     });
     return {
       btn
@@ -60,10 +76,7 @@ export default {
 };
 </script>
 <style lang="scss">
-//.oy-button {
-//  display: inline-block;
-//  margin: 5px 10px;
-//  padding: 0;
+
 
 .oy-button-main {
   margin: 5px 10px;
@@ -87,6 +100,13 @@ export default {
 
   &[disabled] {
     cursor: not-allowed;
+  }
+
+  &.fab {
+    border-radius: 50%;
+    width: auto;
+    padding: 8px 8px;
+    //height: 50px;
   }
 }
 
