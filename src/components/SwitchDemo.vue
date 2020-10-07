@@ -1,13 +1,5 @@
 <template>
-
-  <DemoCard :source-code="switchDemo.__sourceCode">
-    <template v-slot:title>
-      <h2>{{ switchDemo.__sourceCodeTitle }}</h2>
-    </template>
-    <template v-slot:default>
-      <component :is="switchDemo"/>
-    </template>
-  </DemoCard>
+  <DemoCard :component="switchDemo"></DemoCard>
 </template>
 <script lang="ts">
 import switchDemo from './demo/switchDemo.vue';

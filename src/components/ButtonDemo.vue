@@ -2,14 +2,9 @@
   <div>
     Button 示例
     <br>
-    <DemoCard v-for="(item,index) in demo" :key="index"
-              :source-code="item.__sourceCode">
-      <template v-slot:title>
-        <h2>{{ item.__sourceCodeTitle }}</h2>
-      </template>
-      <template v-slot:default>
-        <component :is="item"/>
-      </template>
+    <DemoCard v-for="(item,index) in demo"
+              :key="index"
+              :component="item">
     </DemoCard>
   </div>
 </template>

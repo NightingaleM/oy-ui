@@ -1,21 +1,6 @@
 <template>
-  <DemoCard :source-code="dialogDemo.__sourceCode">
-    <template v-slot:title>
-      <h2>使用插槽弹窗</h2>
-    </template>
-    <template v-slot:default>
-      <component :is="dialogDemo"/>
-    </template>
-  </DemoCard>
-  <DemoCard :source-code="dialogDemoOnlyButton.__sourceCode">
-    <template v-slot:title>
-    <h2>使用函数弹窗</h2>
-    </template>
-    <template v-slot:default>
-    <component :is="dialogDemoOnlyButton"/>
-    </template>
-  </DemoCard>
-
+  <DemoCard :component="dialogDemo"></DemoCard>
+  <DemoCard :component="dialogDemoOnlyButton"></DemoCard>
 </template>
 <script lang="ts">
 import DemoCard from './public/DemoCard.vue';

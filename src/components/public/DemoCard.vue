@@ -1,8 +1,6 @@
 <template>
   <section class="demo-section">
-    <div class="title-box">
-      <slot name="title"></slot>
-    </div>
+    <h2 class="title-box">{{ title }}</h2>
     <div class="demo-card">
       <div class="options">
         <Button @click="sourceCodeToggle" size="mini">CODE</Button>
@@ -12,7 +10,7 @@
         <pre class="language-css" v-html="Prism.highlight(sourceCode,Prism.languages.html,'html')"></pre>
       </div>
       <div class="show-box">
-        <slot name="default"/>
+        <component :is="component"></component>
       </div>
     </div>
   </section>
@@ -29,13 +27,13 @@ const Prism = (window as any).Prism;
 
 export default {
   props: {
-    sourceCode: {
-      type: String,
-      required: true,
-    }
+    component: Object
   },
   components: {Button},
   setup(props) {
+    let sourceCode = props.component?.__sourceCode;
+    let title = props.component?.__sourceCodeTitle;
+
     let sourceCodeStatus = ref(false);
     const sourceCodeToggle = () => {
       sourceCodeStatus.value = !sourceCodeStatus.value;
@@ -44,7 +42,7 @@ export default {
     onMounted(() => {
       let clipboard = new Clipboard(`.copy-btn-${randomClass}`, {
         text: () => {
-          return props.sourceCode;
+          return sourceCode;
         }
       });
       clipboard.on('success', function (e) {
@@ -55,6 +53,8 @@ export default {
       });
     });
     return {
+      title,
+      sourceCode,
       randomClass,
       Prism,
       sourceCodeToggle,
@@ -66,9 +66,11 @@ export default {
 <style lang="scss" scoped>
 .demo-section {
   padding: 20px;
-.title-box {
 
-}
+  .title-box {
+
+  }
+
   .demo-card {
     width: 90%;
     margin: 10px auto;
@@ -106,6 +108,7 @@ export default {
       .language-css {
         margin-top: 0;
       }
+
       pre {
         white-space: pre-wrap;
         word-wrap: break-word;
