@@ -20,10 +20,6 @@ import buttonDemo_2 from './demo/buttonDemo_2.vue';
 import buttonDemo_3 from './demo/buttonDemo_3.vue';
 import buttonDemo_4 from './demo/buttonDemo_4.vue';
 
-import 'prismjs';
-import 'prismjs/themes/prism.css';
-
-const Prism = (window as any).Prism;
 export default {
   components: {DemoCard},
   setup() {
@@ -34,7 +30,6 @@ export default {
         buttonDemo_3,
         buttonDemo_4,
       ],
-      Prism
     };
   }
 };

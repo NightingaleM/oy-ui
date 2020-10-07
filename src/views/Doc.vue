@@ -36,6 +36,7 @@ export default {
   }
 
   main {
+    background-color: #fafafa;
     //flex-grow: 1;
     padding-left: 230px;
     padding-top: 54px;

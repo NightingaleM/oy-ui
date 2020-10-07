@@ -1,23 +1,22 @@
 <template>
-  <section>
-    <h2>{{ tabsDemo.__sourceCodeTitle }}</h2>
-    <component :is="tabsDemo"/>
-    <div class="source-code-box">
-      <pre class="language-css" v-html="Prism.highlight(tabsDemo.__sourceCode,Prism.languages.html,'html')"></pre>
-    </div>
-  </section>
+  <DemoCard :source-code="tabsDemo.__sourceCode">
+    <template v-slot:title>
+      <h2>{{ tabsDemo.__sourceCodeTitle }}</h2>
+    </template>
+    <template v-slot:default>
+      <component :is="tabsDemo"/>
+    </template>
+  </DemoCard>
 </template>
 <script lang="ts">
 import tabsDemo from './demo/tabsDemo.vue';
-import 'prismjs';
-import 'prismjs/themes/prism.css';
+import DemoCard from './public/DemoCard.vue';
 
-const Prism = (window as any).Prism;
 export default {
+  components: {DemoCard},
   setup() {
     return {
       tabsDemo,
-      Prism
     };
   }
 };

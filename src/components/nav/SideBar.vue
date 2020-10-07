@@ -42,8 +42,7 @@ $dark: #1d2c40;
   top: 0;
   height: 100%;
   width: 200px;
-  border-right: 2px solid #f9f9f9;
-
+  border-right: 2px solid #f0f0f0;
   ul {
     li {
       padding: 5px 12px;

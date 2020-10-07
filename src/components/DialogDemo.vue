@@ -1,36 +1,36 @@
 <template>
-  <section>
-    <h2>使用插槽弹窗</h2>
-    <component :is="dialogDemo"/>
-    <div class="source-code-box">
-      <pre class="language-css" v-html="Prism.highlight(dialogDemo.__sourceCode,Prism.languages.html,'html')"></pre>
-    </div>
-  </section>
-  <section>
+  <DemoCard :source-code="dialogDemo.__sourceCode">
+    <template v-slot:title>
+      <h2>使用插槽弹窗</h2>
+    </template>
+    <template v-slot:default>
+      <component :is="dialogDemo"/>
+    </template>
+  </DemoCard>
+  <DemoCard :source-code="dialogDemoOnlyButton.__sourceCode">
+    <template v-slot:title>
     <h2>使用函数弹窗</h2>
+    </template>
+    <template v-slot:default>
     <component :is="dialogDemoOnlyButton"/>
-    <div class="source-code-box">
-      <pre class="language-css" v-html="Prism.highlight(dialogDemoOnlyButton.__sourceCode,Prism.languages.html,'html')"></pre>
-    </div>
-  </section>
+    </template>
+  </DemoCard>
+
 </template>
 <script lang="ts">
+import DemoCard from './public/DemoCard.vue';
 import Button from '../lib/Button.vue';
 import dialogDemo from './demo/dialogDemo.vue';
 import dialogDemoOnlyButton from './demo/dialogDemoOnlyButton.vue';
-import 'prismjs';
-import 'prismjs/themes/prism.css'
-// import 'prismjs/themes/prism-okaidia.css'
-const Prism = (window as any).Prism
+
 export default {
   components: {
-    Button,
+    Button, DemoCard
   },
   setup(props, context) {
     return {
       dialogDemoOnlyButton,
       dialogDemo,
-      Prism
     };
   },
 };
