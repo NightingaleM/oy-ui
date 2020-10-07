@@ -1,27 +1,24 @@
 <template>
-  <div>Tabs 示例</div>
-  <Tabs v-model:selected="selected" position="centered">
-    <Tab title="周一">上班</Tab>
-    <Tab title="周二">还是上班</Tab>
-    <Tab title="周三">继续上班</Tab>
-    <Tab title="周4⃣了啊">上班</Tab>
-    <Tab title="放假前一天了">上班</Tab>
-  </Tabs>
+  <section>
+    <h2>{{ tabsDemo.__sourceCodeTitle }}</h2>
+    <component :is="tabsDemo"/>
+    <div class="source-code-box">
+      <pre class="language-css" v-html="Prism.highlight(tabsDemo.__sourceCode,Prism.languages.html,'html')"></pre>
+    </div>
+  </section>
 </template>
 <script lang="ts">
-import Tabs from '../lib/Tabs.vue';
-import Tab from '../lib/Tab.vue';
-import {ref}  from 'vue'
+import tabsDemo from './demo/tabsDemo.vue';
+import 'prismjs';
+import 'prismjs/themes/prism.css';
+
+const Prism = (window as any).Prism;
 export default {
-  components: {
-    Tabs,
-    Tab,
-  },
-  setup(){
-    let selected = ref('周一')
-    return{
-      selected
-    }
+  setup() {
+    return {
+      tabsDemo,
+      Prism
+    };
   }
 };
 </script>

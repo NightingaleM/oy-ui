@@ -1,23 +1,24 @@
 <template>
-  <div>
-    <Switch v-model:value="value1"/>
-    <Switch :value="value2" @update:value="value2 = $event"/>
-
-  </div>
+  <section>
+    <h2>{{ switchDemo.__sourceCodeTitle }}</h2>
+    <component :is="switchDemo"/>
+    <div class="source-code-box">
+      <pre class="language-css" v-html="Prism.highlight(switchDemo.__sourceCode,Prism.languages.html,'html')"></pre>
+    </div>
+  </section>
 </template>
 <script lang="ts">
-  import Switch from '../lib/Switch.vue';
-  import {ref} from 'vue';
+import switchDemo from './demo/switchDemo.vue';
+import 'prismjs';
+import 'prismjs/themes/prism.css';
+const Prism = (window as any).Prism;
 
-  export default {
-    components: {Switch},
-    setup() {
-      const value1 = ref(true);
-      const value2 = ref(true);
-      return {
-        value1,
-        value2
-      };
-    }
-  };
+export default {
+  setup() {
+    return {
+      switchDemo,
+      Prism
+    };
+  }
+};
 </script>
