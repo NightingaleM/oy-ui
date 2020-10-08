@@ -1,5 +1,5 @@
 import './index.scss';
-import './lib/oyui.scss';
+import './lib/oy_ui.scss';
 import 'github-markdown-css';
 import {createApp} from 'vue';
 import App from './App.vue';
