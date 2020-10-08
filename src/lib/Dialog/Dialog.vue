@@ -13,7 +13,7 @@
           <footer>
             <slot name="footer">
               <Button theme="text" outline @click="close">取消</Button>
-              <Button theme="text" outline theme="primary">确定</Button>
+              <Button theme="text" outline >确定</Button>
             </slot>
           </footer>
         </div>

@@ -15,7 +15,7 @@
 </template>
 <script lang="ts">
 import {nextTick, onMounted, ref} from 'vue';
-import waveHandle from './public_js/waveHandle';
+import waveHandle from './public_js/waveHandle.ts';
 
 export default {
   inheritAttrs: false, // 标示不自动将属性传递到组件最外层元素
