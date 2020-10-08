@@ -43,7 +43,8 @@ export default {
     //display: flex;
     align-items: center;
     @media (max-width: 650px) {
-      padding-left: 0;
+      //padding-left: 0px;
+      padding: 10px;
     }
   }
 }

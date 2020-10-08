@@ -1,11 +1,11 @@
 <demo>
-基本用法
+支持disabled
 </demo>
 <template>
   <div>
-    <Switch v-model:value="value1"/>
+    <Switch v-model:value="value1" disabled/>
     <br />
-    <Switch :value="value2" @update:value="value2 = $event"/>
+    <Switch v-model:value="value2" disabled/>
   </div>
 </template>
 <script lang="ts">

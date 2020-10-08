@@ -1,12 +1,9 @@
 <template>
-  <div>
-    Button 示例
-    <br>
-    <DemoCard v-for="(item,index) in demo"
-              :key="index"
-              :component="item">
-    </DemoCard>
-  </div>
+  <h2>Button 示例</h2>
+  <DemoCard v-for="(item,index) in demo"
+            :key="index"
+            :component="item">
+  </DemoCard>
 </template>
 <script lang="ts">
 import DemoCard from './public/DemoCard.vue';

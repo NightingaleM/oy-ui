@@ -77,7 +77,7 @@ export default {
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px -2px;
     @media (max-width: 650px) {
-      width: 90vw;
+      width: 85vw;
     }
 
     .options {
