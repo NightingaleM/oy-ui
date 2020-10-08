@@ -1,5 +1,6 @@
 <demo>
-基础用法
+<h2>基础用法</h2>
+<p></p>
 </demo>
 <template>
   <div>

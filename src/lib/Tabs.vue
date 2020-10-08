@@ -39,7 +39,8 @@ export default {
 
     defaults.forEach(tab => {
       titles.push(tab.props.title);
-      if (tab.type !== Tab) {
+      // @ts-ignore
+      if (tab.type.name !== Tab.name) {
         throw new Error('Tabs的子标签必须为Tab');
       }
     });
@@ -69,7 +70,9 @@ export default {
 
     onMounted(() => {
       // 单用watchEffect会在mounted之前掉用，获取不到dom，所以这里在onMounted里再使用.
-      watchEffect(initWrapper);
+      watchEffect(initWrapper,{
+        flush: 'post' //  https://github.com/vuejs/vue-next/commit/49bb44756fda0a7019c69f2fa6b880d9e41125aa
+      });
     });
     return {
       tabGroup,
