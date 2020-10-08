@@ -2,18 +2,20 @@
   <!-- teleport 让这个组件查到body下而不是引入的父组件下 -->
   <teleport to="body">
     <transition name="oy-dialog-animation-overlay">
-      <div v-if="visible && visibleByFunction" class="oy-dialog-overlay" @click="closeWithOverlay">
-        <div class="oy-dialog-wrapper" v-if="visible && visibleByFunction">
+      <div v-if="visible && visibleByFunction" class="oy-dialog-overlay" @click.stop="close">
+        <div class="oy-dialog-wrapper" v-if="visible && visibleByFunction" @click.stop="">
           <header>
             <slot name="title"/>
           </header>
           <div class="oy-dialog-content">
             <slot name="content"/>
           </div>
-          <slot name="footer">
-            <Button @click="close">取消</Button>
-            <Button theme="primary">确定</Button>
-          </slot>
+          <footer>
+            <slot name="footer">
+              <Button theme="text" outline @click="close">取消</Button>
+              <Button theme="text" outline theme="primary">确定</Button>
+            </slot>
+          </footer>
         </div>
       </div>
     </transition>
@@ -51,14 +53,9 @@ export default {
       }
       context.emit('update:visible', !props.visible);
     };
-    const closeWithOverlay = () => {
-      if (props.visible) {
-        context.emit('update:visible', !props.visible);
-      }
-    };
     return {
       visibleByFunction,
-      close, closeWithOverlay
+      close
     };
   }
 };
@@ -86,14 +83,26 @@ export default {
   max-height: 80vh;
   z-index: 11;
   transform-origin: 50% 50%;
+  //padding: 5px 10px;
 
   header {
     display: block;
-    padding: 5px 3px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #e0e0e0;
   }
 
   div.oy-dialog-content {
-    padding: 5px 3px;
+    padding: 10px 15px;
+    border-bottom: 1px dashed #e0e0e0;
+  }
+  footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  @media (max-width: 650px) {
+    width: 80vw;
   }
 }
 
