@@ -4,23 +4,25 @@
     <span></span>
   </button>
 </template>
-<script lang="ts" setup="props, { emit }">
-// Experimental Features:
-// https://github.com/vuejs/rfcs/blob/sfc-improvements/active-rfcs/0000-sfc-script-setup.md
+<script lang="ts">
 import {ref} from 'vue';
 
 export default {
   props: {
     value: Boolean,
     disable: Boolean,
+  },
+  setup(props, context) {
+    console.log(props.value);
+    const checked = ref(false);
+    const toggle = () => {
+      // NOTE: emit的事件名，必须和props的名字一样
+      context.emit('update:value', !props.value);
+    };
+    return {checked, toggle};
+
   }
 };
-export const checked = ref(false);
-export const toggle = () => {
-  // NOTE: emit的事件名，必须和props的名字一样
-  emit('update:value', !props.value);
-};
-
 </script>
 <style lang="scss" scoped>
 $h: 14px;
@@ -91,7 +93,6 @@ $w: 34px;
       }
     }
   }
-
   &[disabled] {
     cursor: not-allowed;
     opacity: 0.8;
