@@ -61,10 +61,7 @@ export default {
   setup(props, context) {
     let btn = ref<HTMLDivElement>(null);
     onMounted(() => {
-      console.log('btn.value.disabled', btn.value.disabled);
-      console.log('!props.noWave', !props.noWave);
       if (!btn.value.disabled && !props.noWave) {
-        console.log('加载了wave，dom为：', btn.value);
         waveHandle(btn);
       }
       if (props.fab) {
