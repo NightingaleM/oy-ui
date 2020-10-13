@@ -10,7 +10,7 @@ Dialog使用插槽弹窗
       <p><b>内</b>容</p>
     </template>
     <template v-slot:footer>
-      <Button @click="toggle">我知道了</Button>
+      <Button theme="text" @click="toggle">我知道了</Button>
     </template>
   </Dialog>
 </template>

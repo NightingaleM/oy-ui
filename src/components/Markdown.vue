@@ -12,7 +12,6 @@ export default {
     }
   },
   setup(props) {
-    console.log(props.path);
     let content = ref<string>('');
     import(props.path).then(data=>{
       content.value = data.default

@@ -4,7 +4,9 @@
       `oy-tabs-tab-position-${position}`
     ]" ref="tabGroup">
       <div class="oy-tabs-slider-wrapper oy-tabs-slider-wrapper-init" ref="wrapper"></div>
-      <div :class="['oy-tabs-tab',{active: selected === t}]"
+      <div :class="['oy-tabs-tab',
+      {active: selected === t},
+      {oyTabGrow: grow}]"
            @click="select(t)"
            v-for="(t,index) in titles" :key="index"
            :ref="el => { if(t===selected) ac_el = el }"
@@ -22,12 +24,16 @@ import {ref, computed, watchEffect, onMounted} from 'vue';
 
 export default {
   props: {
+    grow: {
+      type: Boolean,
+      default: false
+    },
     selected: {
       type: String
     },
     position: {
       type: String,
-      default: 'right',
+      default: 'left',
       validator(value: string): boolean {
         return ['right', 'left', 'centered'].indexOf(value) >= 0;
       }
@@ -59,7 +65,7 @@ export default {
       wrapper.value.style.width = ac_el.value.offsetWidth + 'px';
       const {left: left1} = tabGroup.value.getBoundingClientRect();
       const {left: left2} = ac_el.value.getBoundingClientRect();
-      const left = left2 - left1;
+      const left = left2 - left1 + tabGroup.value.scrollLeft;
       wrapper.value.style.left = left + 'px';
       if (wrapper.value.classList.contains('oy-tabs-slider-wrapper-init')) {
         setTimeout(() => {
@@ -70,7 +76,7 @@ export default {
 
     onMounted(() => {
       // 单用watchEffect会在mounted之前掉用，获取不到dom，所以这里在onMounted里再使用.
-      watchEffect(initWrapper,{
+      watchEffect(initWrapper, {
         flush: 'post' //  https://github.com/vuejs/vue-next/commit/49bb44756fda0a7019c69f2fa6b880d9e41125aa
       });
     });
@@ -89,9 +95,45 @@ export default {
 $blue: rgb(94, 95, 226);
 .oy-tabs {
   &-tab-group {
+    background-color: #00bcd4;
+    color: rgba(255, 255, 255, 0.7);
     position: relative;
     display: flex;
     padding: 5px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    transition: all 0.3s ease-in-out;
+
+
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+      background-color: rgba(0, 0, 0, 0);
+    }
+
+    &::-webkit-scrollbar {
+      background-color: rgba(0, 0, 0, 0);
+      width: 4px;
+      height: 6px;
+      background-color: rgba(0, 0, 0, 0);
+      cursor: pointer;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #ebebeb;
+      border-radius: 4px;
+      background-clip: padding-box;
+      min-height: 28px;
+      cursor: pointer;
+      &:hover {
+        background-color: #d9d9d9;
+      }
+    }
+
+    &::-webkit-scrollbar-track-piece {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
 
     .oy-tabs-slider-wrapper {
       position: absolute;
@@ -99,7 +141,7 @@ $blue: rgb(94, 95, 226);
       left: 10px;
       width: 50px;
       bottom: 0;
-      background-color: #a0cfff;
+      background-color: #ffeb3b;
       transition: left 0.3s ease-in-out, width 0.3s ease-in-out;
     }
 
@@ -109,22 +151,31 @@ $blue: rgb(94, 95, 226);
     }
 
     .oy-tabs-tab {
-      padding: 5px 8px;
-      margin: 5px;
+      padding: 5px 11px;
+      margin: 1px;
       cursor: pointer;
+      text-wrap: none;
+      white-space: nowrap;
+      @media (max-width: 650px) {
+        font-size: 12px;
+      }
 
       &.active {
-        color: $blue;
+        color: rgb(255, 255, 255)
       }
+    }
+
+    .oyTabGrow {
+      text-align: center;
+      flex-grow: 1;
     }
   }
 
   &-tab-position-right {
-
+    justify-content: flex-end;
   }
 
   &-tab-position-left {
-    justify-content: flex-end;
   }
 
   &-tab-position-centered {

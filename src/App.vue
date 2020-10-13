@@ -18,7 +18,6 @@ export default {
     let menuVisible = ref(width <= 650 ? false : true);
     let isPhone = ref(width > 650 ? false : true);
     window.addEventListener('resize', () => {
-      console.log('ddd');
       const width = document.documentElement.clientWidth;
       menuVisible.value = width <= 650 ? false : true;
       isPhone.value = width > 650 ? false : true;

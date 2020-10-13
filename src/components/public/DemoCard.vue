@@ -126,3 +126,12 @@ export default {
 }
 
 </style>
+<style lang="scss">
+.show-box {
+  p {
+    font-size: 14px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+}
+</style>
