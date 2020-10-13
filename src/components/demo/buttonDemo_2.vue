@@ -1,5 +1,6 @@
 <demo>
-禁用状态
+<h2>禁用</h2>
+<p>添加 <code>disabled</code></p>
 </demo>
 <template>
   <Button disabled> 默认按钮</Button>

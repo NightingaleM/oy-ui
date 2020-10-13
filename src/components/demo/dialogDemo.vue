@@ -1,5 +1,6 @@
 <demo>
-Dialog使用插槽弹窗
+<h2>弹窗基本用法</h2>
+<p>使用插槽，可以方便的自定义弹窗内容。</p>
 </demo>
 <template>
   <Button @click="toggle" theme="primary">点击弹窗</Button>

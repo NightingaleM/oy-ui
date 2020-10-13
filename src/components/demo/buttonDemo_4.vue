@@ -1,5 +1,6 @@
 <demo>
-立体感
+<h2>立体感</h2>
+<p>给予了一定的阴影，显得有立体的感觉。属性：<code>elevation</code>，可选值：<code>1,2,3,4</code></p>
 </demo>
 <template>
   <Button elevation="1" theme="text">默认按钮</Button>

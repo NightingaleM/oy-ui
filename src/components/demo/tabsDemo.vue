@@ -1,5 +1,6 @@
 <demo>
-基本用法
+<h2>基本用法</h2>
+<p>tab长度超出tabs长度时，会出现滚动条。</p>
 </demo>
 <template>
   <div>Tabs 示例</div>
@@ -10,7 +11,7 @@
     <Tab title="周三">周三,继续上班</Tab>
     <Tab title="周四">周四,上班</Tab>
     <Tab title="周五">周五,
-      <Button>准备放假</Button>
+      <Button size="mini">准备放假</Button>
     </Tab>
     <Tab title="周六(假期）">周六,休息</Tab>
   </Tabs>

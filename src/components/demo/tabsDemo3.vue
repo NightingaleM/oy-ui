@@ -1,5 +1,6 @@
 <demo>
-基本用法
+<h2>填充</h2>
+<p>使用 <code>grow</code>属性，可以将未占用的空间填满。</p>
 </demo>
 <template>
   <div>Tabs 示例</div>

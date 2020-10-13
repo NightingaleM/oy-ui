@@ -1,5 +1,6 @@
 <demo>
-按钮大小
+<h2>大小</h2>
+<p>按钮可以设置成不同尺寸，可选值：<code>medium,small,mini</code></p>
 </demo>
 <template>
   <Button> 默认按钮</Button>

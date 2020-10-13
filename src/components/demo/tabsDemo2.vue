@@ -1,6 +1,6 @@
 <demo>
-position
-<p>默认情况下为靠左。</p>
+<h2>调整位置</h2>
+<p>使用<code>position</code>属性，调整tab位置。可选属性：<code>centered,left,right</code>。默认属性为<code>left</code>。</p>
 </demo>
 <template>
   <p>position:centered</p>

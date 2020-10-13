@@ -1,10 +1,11 @@
 <demo>
-基本用法
+<h2>基本用法</h2>
 </demo>
+
 <template>
   <div>
     <Switch v-model:value="value1"/>
-    <br />
+    <br/>
     <Switch :value="value2" @update:value="value2 = $event"/>
   </div>
 </template>

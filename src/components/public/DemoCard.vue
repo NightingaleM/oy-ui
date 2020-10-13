@@ -1,6 +1,6 @@
 <template>
   <section class="demo-section">
-    <h2 class="title-box">{{ title }}</h2>
+    <h2 class="markdown-body" v-html="title"></h2>
     <div class="demo-card">
       <div class="options">
         <Button @click="sourceCodeToggle" size="mini">CODE</Button>
@@ -72,8 +72,8 @@ export default {
   }
 
   .demo-card {
-    width: 90%;
-    margin: 10px auto;
+    //width: 90%;
+    margin: 10px 0;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px -2px;
     @media (max-width: 650px) {

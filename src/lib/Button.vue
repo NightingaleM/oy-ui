@@ -93,6 +93,26 @@ export default {
   background-color: transparent;
   cursor: pointer;
 
+  &:hover {
+    &:before{
+      background-color: currentColor;
+    }
+  }
+  &:before {
+    border-radius: inherit;
+    color: inherit;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    opacity: 0.22;
+    transition: 0.25s ease;
+    width: 100%;
+    text-decoration: inherit;
+    vertical-align: inherit;
+  }
+
   span {
     font-size: 14px;
     text-align: center;

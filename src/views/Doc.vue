@@ -24,11 +24,14 @@ export default {
 .layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 
   .side-bar {
     top: 44px;
     height: calc(100% - 54px);
+    position: fixed;
+    top: 44px;
+    left: 0;
   }
 
   .nav {
@@ -36,6 +39,7 @@ export default {
   }
 
   main {
+    min-height: calc(100vh - 44px);
     background-color: #fafafa;
     //flex-grow: 1;
     padding-left: 230px;
