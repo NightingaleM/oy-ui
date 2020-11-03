@@ -16,8 +16,8 @@ export default {
     const menuVisible = inject<Ref<boolean>>('menuVisible'); // get
     const navList = [
       ['介绍', '/doc/intro'],
-      ['开始使用', '/doc/get-start'],
       ['安装', '/doc/install'],
+      ['开始使用', '/doc/get-start'],
       ['Dialog', '/doc/dialog'],
       ['Button', '/doc/button'],
       ['Switch', '/doc/switch'],

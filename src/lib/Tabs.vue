@@ -20,7 +20,7 @@
 </template>
 <script lang="ts">
 import Tab from './Tab.vue';
-import {ref, computed, watchEffect, onMounted} from 'vue';
+import {ref, computed, watchEffect, onMounted, onBeforeUnmount} from 'vue';
 
 export default {
   props: {
@@ -76,9 +76,15 @@ export default {
 
     onMounted(() => {
       // 单用watchEffect会在mounted之前掉用，获取不到dom，所以这里在onMounted里再使用.
-      watchEffect(initWrapper, {
+      watchEffect(() => {
+        window.addEventListener('resize', initWrapper);
+        initWrapper();
+      }, {
         flush: 'post' //  https://github.com/vuejs/vue-next/commit/49bb44756fda0a7019c69f2fa6b880d9e41125aa
       });
+    });
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', initWrapper);
     });
     return {
       tabGroup,
@@ -126,6 +132,7 @@ $blue: rgb(94, 95, 226);
       background-clip: padding-box;
       min-height: 28px;
       cursor: pointer;
+
       &:hover {
         background-color: #d9d9d9;
       }
