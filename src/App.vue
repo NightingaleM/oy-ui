@@ -87,10 +87,10 @@ export default {
   }
 
   .filter-bot-left {
-    -webkit-mask-image: url(/img/left_bot_b_m.webp);
-    mask-image: url(/img/m.webp);
+    -webkit-mask-image: url(https://oyrc-pic.oss-cn-shenzhen.aliyuncs.com/fhw_invite/left_bot_b_m.webp);
+    mask-image: url(https://oyrc-pic.oss-cn-shenzhen.aliyuncs.com/fhw_invite/m.webp);
     background-position: 0 100%;
-    background-image: url(/img/left_bot_hover.webp);
+    background-image: url(https://oyrc-pic.oss-cn-shenzhen.aliyuncs.com/fhw_invite/left_bot_hover.webp);
     -webkit-mask-position: left bottom;
   }
 
@@ -110,9 +110,9 @@ export default {
     background-position: 0 100%;
     -webkit-mask-position: left bottom;
     mask-position: left bottom;
-    background-image: url(/img/left_bot.webp);
-    -webkit-mask-image: url(/img/left_bot_b_m.webp);
-    mask-image: url(/img/left_bot_b_m.webp);
+    background-image: url(https://oyrc-pic.oss-cn-shenzhen.aliyuncs.com/fhw_invite/left_bot.webp);
+    -webkit-mask-image: url(https://oyrc-pic.oss-cn-shenzhen.aliyuncs.com/fhw_invite/left_bot_b_m.webp);
+    mask-image: url(https://oyrc-pic.oss-cn-shenzhen.aliyuncs.com/fhw_invite/left_bot_b_m.webp);
     -webkit-mask-size: 1500px;
     mask-size: 1500px;
   }
