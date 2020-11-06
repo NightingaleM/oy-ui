@@ -22,6 +22,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .layout {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255,255,255,0.1);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -40,7 +43,7 @@ export default {
 
   main {
     min-height: calc(100vh - 44px);
-    background-color: #fafafa;
+    //background-color: #fafafa;
     //flex-grow: 1;
     padding-left: 230px;
     padding-top: 54px;

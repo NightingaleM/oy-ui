@@ -7,6 +7,8 @@
 import {
   ref
 } from 'vue'
+import 'prismjs/themes/prism-tomorrow.css';
+
 export default {
   props: {
     content: {

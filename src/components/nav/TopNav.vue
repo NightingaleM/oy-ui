@@ -1,6 +1,8 @@
 <template>
   <div class="top-nav">
-    <div class="toggle" @click="toggleMenu">O</div>
+    <div class="toggle" @click="toggleMenu">    <svg class="icon" aria-hidden="true">
+      <use xlink:href="#icon-heng1"></use>
+    </svg></div>
     <router-link to="/" class="logo">
       <span>O</span>Y_U<span>I</span>
     </router-link>

@@ -1,18 +1,19 @@
 <template>
   <nav class="side-bar" v-if="menuVisible">
     <ul>
-      <li v-for="i in navList">
+      <li v-for="i in navList" @click="filterAction">
         <router-link :to="i[1]">{{ i[0] }}</router-link>
       </li>
     </ul>
   </nav>
 </template>
 <script lang="ts">
-import {inject, Ref} from 'vue';
+import {onMounted,inject, Ref,ref,} from 'vue';
 
 export default {
   props: {},
   setup(props, context) {
+    const filterDom = ref<HTMLDocument>(null)
     const menuVisible = inject<Ref<boolean>>('menuVisible'); // get
     const navList = [
       ['介绍', '/doc/intro'],
@@ -23,6 +24,14 @@ export default {
       ['Switch', '/doc/switch'],
       ['Tabs', '/doc/tabs'],
     ];
+    const filterAction = () =>{
+
+    }
+    onMounted(()=>{
+      filterDom.value = document.querySelector('.filter')
+
+    })
+
     return {
       menuVisible,
       navList
