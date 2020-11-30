@@ -23,6 +23,7 @@ export default {
       ['Button', '/doc/button'],
       ['Switch', '/doc/switch'],
       ['Tabs', '/doc/tabs'],
+      ['Collapse', '/doc/collapse'],
     ];
     const filterAction = () =>{
 
