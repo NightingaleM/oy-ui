@@ -4,11 +4,9 @@
       <slot v-if="!title" name="title"></slot>
       <span v-else>{{ title }}</span>
     </div>
-    <transition name="router-slid">
-      <div :class="['oy-collapse-content',{'oy-collapse-content-active': active}]" ref="contentRef">
-        <slot name="default"></slot>
-      </div>
-    </transition>
+    <div :class="['oy-collapse-content',{'oy-collapse-content-active': active}]" ref="contentRef">
+      <slot name="default"></slot>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -60,7 +58,7 @@ export default {
           let targetHeight = window.getComputedStyle(contentRef.value).height;
           contentRef.value.style.height = '0px';
           setTimeout(() => {
-            contentRef.value.style.height = targetHeight;
+            contentRef.value.style.height = parseInt(targetHeight, 10) + 20 + 'px';
           }, 0);
         } else if (!active.value) {
           contentRef.value.style.height = '0px';
@@ -80,29 +78,28 @@ export default {
 <style lang="scss">
 
 .oy-collapse-item {
-  .oy-collapse-header {
+  border-radius: 4px;
+  border-bottom: 1px solid rgba(118, 118, 118, 0.2);
+  padding: 16px 24px;
 
+  .oy-collapse-header {
+    font-size: 14px;
+    cursor: pointer;
   }
 
   .oy-collapse-content {
-    background-color: #cccccc;
     //max-height: 0;
-    transition: height ease-in-out 0.25s;
+    transition: height ease-in-out 0.25s, margin ease-in-out 0.25s, padding ease-in-out 0.25s;
     overflow: hidden;
   }
 
   .oy-collapse-content-active {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(118, 118, 118, 0.1);
     //height: auto;
     //max-height: 1000px
   }
 }
 
-.router-slid-enter-active, .router-slid-leave-active {
-  transition: all .4s;
-}
-
-.router-slid-enter, .router-slid-leave-active {
-  transform: translate3d(0, 3rem, 0);
-  opacity: 0;
-}
 </style>

@@ -13,8 +13,7 @@
       <template #default>
         <pre>
 远上寒山石径斜，白云生处有人家,
-停车坐爱枫林晚，霜叶红于二月花。
-        </pre>
+停车坐爱枫林晚，霜叶红于二月花。</pre>
       </template>
     </CollapseItem>
     <CollapseItem title="九月九日忆山东兄弟" name="3">
