@@ -24,6 +24,7 @@ export default {
       ['Switch', '/doc/switch'],
       ['Tabs', '/doc/tabs'],
       ['Collapse', '/doc/collapse'],
+      ['Treeview', '/doc/treeview'],
     ];
     const filterAction = () =>{
 
