@@ -1,10 +1,18 @@
 <template>
-  <ul>
+  <ul class="oy-treeview-root">
     <li
-        class="oy-treeview-node"
+        :class="['oy-treeview-node',{'oy-treeview-click':node.children}]"
         v-for="(node,index) in items"
         @click.stop="showUpHandle(node.id)">
-      {{ node.name }}
+      <div class="oy-treeview-text">
+        <svg class="icon" aria-hidden="true" v-show="node.children && showMap[node[primaryKey]]">
+          <use xlink:href="#icon-zhankai"></use>
+        </svg>
+        <svg class="icon" aria-hidden="true" v-show="node.children && !showMap[node[primaryKey]]">
+          <use xlink:href="#icon-zhankai2"></use>
+        </svg>
+        {{ node.name }}
+      </div>
       <div class="oy-children-box" v-if="node.children && showMap[node[primaryKey]]">
         <component is="TreeView" :items="node.children" @changeShowUp="showUpHandle"></component>
       </div>
@@ -14,12 +22,10 @@
 </template>
 <script lang="ts">
 import TreeView from './Treeview.vue';
-import {nextTick, onMounted, ref, computed, watchEffect} from 'vue';
+import {ref, watchEffect} from 'vue';
 
 const treeHandle = (item, primaryKey, defaultExpandedKeys) => {
-  console.log('run');
   let showMap = {};
-  // let selectMap = {};
   const handle = (root) => {
     if (showMap[root[primaryKey]]) return;
     showMap[root[primaryKey]] = !(defaultExpandedKeys.indexOf(root[primaryKey]) < 0);
@@ -32,7 +38,6 @@ const treeHandle = (item, primaryKey, defaultExpandedKeys) => {
   item.forEach(it => {
     handle(it);
   });
-  console.log(showMap);
   return showMap;
 };
 
@@ -52,7 +57,6 @@ export default {
       default: []
     }
   },
-  // components: {TreeView},
   setup(props, context) {
     const {items, primaryKey, defaultExpandedKeys} = props;
     const {emit} = context;
@@ -75,13 +79,36 @@ export default {
 };
 </script>
 <style lang="scss">
-.oy-treeview-node {
-  margin-left: 15px;
-  padding-left: 5px;
+.oy-treeview-root {
 
-  border-left: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  .oy-treeview-node {
+    border-left: 1px solid #ccc;
+    padding-left: 15px;
+    cursor: default;
+
+    .oy-treeview-text {
+      position: relative;
+      padding: 10px 10px 10px 25px;
+
+      svg {
+        position: absolute;
+        top: 50%;
+        left: -5px;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  .oy-treeview-click {
+    cursor: pointer;
+    >.oy-treeview-text{
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
 }
+
 </style>
 
 
