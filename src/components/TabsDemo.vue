@@ -1,4 +1,5 @@
 <template>
+  <h2>Tabs 示例</h2>
   <DemoCard :component="tabsDemo"></DemoCard>
   <DemoCard :component="tabsDemo2"></DemoCard>
   <DemoCard :component="tabsDemo3"></DemoCard>

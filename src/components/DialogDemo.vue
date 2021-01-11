@@ -1,4 +1,5 @@
 <template>
+  <h2>Dialog 示例</h2>
   <DemoCard :component="dialogDemo"></DemoCard>
   <DemoCard :component="dialogDemoOnlyButton"></DemoCard>
 </template>

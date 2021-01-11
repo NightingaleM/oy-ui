@@ -1,4 +1,5 @@
 <template>
+  <h2>Switch 示例</h2>
   <DemoCard :component="switchDemo"></DemoCard>
   <DemoCard :component="switchWithDisable"></DemoCard>
 </template>

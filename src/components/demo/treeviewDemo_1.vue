@@ -1,6 +1,11 @@
 <demo>
-<h2>属性控件</h2>
-<p>巴拉巴拉</p>
+<h2>基本用法</h2>
+<p>
+
+  <code>items</code> 展示数据； <br />
+  <code>primaryKey</code> 每个树节点用来作为维一标识的字段名, 默认字段为<code>id</code>；<br />
+  <code>defaultExpandedKeys</code> 默认展开节点的key的数组。
+</p>
 </demo>
 <template>
   <TreeView :items="items" :defaultExpandedKeys="defaultExpandedKeys" primary-key="id"></TreeView>
