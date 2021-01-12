@@ -1,7 +1,7 @@
 <template>
   <nav class="side-bar" v-if="menuVisible">
     <ul>
-      <li v-for="i in navList" @click="filterAction">
+      <li v-for="i in navList">
         <router-link :to="i[1]">{{ i[0] }}</router-link>
       </li>
     </ul>
@@ -25,10 +25,8 @@ export default {
       ['Tabs', '/doc/tabs'],
       ['Collapse', '/doc/collapse'],
       ['Treeview', '/doc/treeview'],
+      ['Pagination', '/doc/pagination'],
     ];
-    const filterAction = () =>{
-
-    }
     onMounted(()=>{
       filterDom.value = document.querySelector('.filter')
 

@@ -22,7 +22,7 @@ export const toggle = () => {
 };
 
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 $h: 14px;
 $h2: $h + 4px;
 $w: 34px;
