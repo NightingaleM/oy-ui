@@ -1,14 +1,17 @@
 <template>
   <div class="top-nav">
-    <div class="toggle" @click="toggleMenu">    <svg class="icon" aria-hidden="true">
-      <use xlink:href="#icon-heng1"></use>
-    </svg></div>
+    <div class="toggle" @click="toggleMenu">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-heng1"></use>
+      </svg>
+    </div>
     <router-link to="/" class="logo">
       <span>O</span>Y_U<span>I</span>
     </router-link>
+    <span class="version">{{ version }}</span>
     <ul>
       <li>
-        <router-link to="/doc">文档</router-link>
+        <router-link to="/doc/intro">文档</router-link>
       </li>
     </ul>
   </div>
@@ -16,14 +19,17 @@
 </template>
 <script lang="ts">
 import {inject, Ref} from 'vue';
+import config from '../../../package.json';
 
+console.log(config.version);
 export default {
   setup() {
+    const version = config.version;
     const menuVisible = inject<Ref<boolean>>('menuVisible'); // get
     const toggleMenu = () => {
       menuVisible.value = !menuVisible.value;
     };
-    return {menuVisible, toggleMenu};
+    return {menuVisible, toggleMenu, version};
   },
 };
 </script>
@@ -54,11 +60,20 @@ export default {
 
     display: none;
   }
+
   .logo {
-    margin-right: auto;
+
     span {
       color: rgb(187, 231, 228)
     }
+  }
+
+  .version {
+    color:#cccccc;
+    padding-top: 5px;
+    margin-left: 10px;
+    margin-right: auto;
+    font-size: 12px;
   }
 
   ul {
@@ -66,16 +81,18 @@ export default {
 
     }
   }
+
   a {
     color: #1d2c40;;
     text-decoration: none;
   }
+
   @media (max-width: 650px) {
-    .toggle{
+    .toggle {
       display: block;
     }
-    .logo{
-      margin: 0;
+    .version {
+      margin-right: 0;
     }
     ul {
       display: none;
