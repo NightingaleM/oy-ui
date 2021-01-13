@@ -94,10 +94,11 @@ export default {
   cursor: pointer;
 
   &:hover {
-    &:before{
+    &:before {
       background-color: currentColor;
     }
   }
+
   &:before {
     border-radius: inherit;
     color: inherit;
@@ -236,7 +237,7 @@ export default {
 
 .oy-button-theme-text {
   color: #409eff;
-  border: none;
+  border: 1px solid transparent;
   background-color: transparent;
 
   &[disabled] {
