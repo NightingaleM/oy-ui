@@ -1,6 +1,6 @@
 {
   "name": "oy_ui",
-  "version": "0.0.14",
+  "version": "0.0.16",
   "files": [
     "dist/lib/*"
   ],

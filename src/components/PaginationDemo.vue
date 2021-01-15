@@ -3,13 +3,14 @@
   <DemoCard :component="paginationDemo_1"></DemoCard>
   <DemoCard :component="paginationDemo_2"></DemoCard>
   <DemoCard :component="paginationDemo_3"></DemoCard>
-  <!--  <DemoCard :component="dialogDemoOnlyButton"></DemoCard>-->
+  <DemoCard :component="paginationDemo_4"></DemoCard>
 </template>
 <script lang="ts">
 import DemoCard from './public/DemoCard.vue';
 import paginationDemo_1 from './demo/paginationDemo_1.vue';
 import paginationDemo_2 from './demo/paginationDemo_2.vue';
 import paginationDemo_3 from './demo/paginationDemo_3.vue';
+import paginationDemo_4 from './demo/paginationDemo_4.vue';
 
 export default {
   components: {
@@ -19,7 +20,8 @@ export default {
     return {
       paginationDemo_1,
       paginationDemo_2,
-      paginationDemo_3
+      paginationDemo_3,
+      paginationDemo_4
     };
   },
 };

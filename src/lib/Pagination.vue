@@ -1,5 +1,5 @@
 <template>
-  <div class="oy-pagination-box" v-if="hideOnOnePage ? pages!==1 : true">
+  <div :class="['oy-pagination-box',{'oy-pagination-small-box':small}]" v-if="hideOnOnePage ? pages!==1 : true">
     <Button
         v-if="layout.match('prev')"
         @click="pre"
@@ -11,7 +11,7 @@
     </Button>
     <ul>
       <li>
-        <Button :disabled="disable" size="medium" :theme="currentPage===1? 'primary':'text'"
+        <Button :disabled="disable" :size="small?'mini':'medium'" :theme="currentPage===1? 'primary':'text'"
                 @click="changePageHandle(1)">1
         </Button>
       </li>
@@ -21,7 +21,7 @@
         </svg>
       </li>
       <li v-for="i in vir_pages" :key="i">
-        <Button :disabled="disable" size="medium" :theme="currentPage===i ? 'primary':'text'"
+        <Button :disabled="disable" :size="small?'mini':'medium'" :theme="currentPage===i ? 'primary':'text'"
                 @click="changePageHandle(i)">{{ i }}
         </Button>
       </li>
@@ -31,7 +31,7 @@
         </svg>
       </li>
       <li>
-        <Button :disabled="disable" size="medium"
+        <Button :disabled="disable" :size="small?'mini':'medium'"
                 v-if="pages!==1"
                 :theme="currentPage===pages ? 'primary':'text'" @click="changePageHandle(pages)">{{
             pages
@@ -66,6 +66,10 @@ export default {
   name: 'pagination',
   components: {Button},
   props: {
+    small: { // 是否要mini版本（去除了button的margin)
+      type: Boolean,
+      default: false
+    },
     currentPage: { // 当前页数
       type: Number,
       require: true,
@@ -74,6 +78,12 @@ export default {
     total: { // 数据总数
       type: Number,
       require: true,
+      validator: function (value) {
+        if (!value || value <= 0) {
+          return false;
+        }
+        return true;
+      }
     },
     pageSize: { // 每页显示条数
       type: Number,
@@ -130,7 +140,11 @@ export default {
 
 
     watchEffect(() => {
-      pages.value = parseInt(props.total / props.pageSize + (props.total % props.pageSize ? 1 : 0), 10);
+      if (props.total <= 0) {
+        pages.value = 1;
+      } else {
+        pages.value = parseInt(props.total / props.pageSize + (props.total % props.pageSize ? 1 : 0), 10);
+      }
       if (pages.value > props.pageCount) {
         if (props.currentPage >= pages.value - (props.pageCount - 4)) { // 快到最后了
           vir_pages.value = [...makeArray(
@@ -181,4 +195,10 @@ export default {
     }
   }
 }
+</style>
+<style>
+.oy-pagination-small-box .oy-button-main {
+  margin: 0;
+}
+
 </style>
