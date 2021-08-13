@@ -22,6 +22,7 @@ export default {
       ['Dialog', '/doc/dialog'],
       ['Button', '/doc/button'],
       ['Switch', '/doc/switch'],
+      ['Checkbox', '/doc/checkbox'],
       ['Tabs', '/doc/tabs'],
       ['Collapse', '/doc/collapse'],
       ['Treeview', '/doc/treeview'],
