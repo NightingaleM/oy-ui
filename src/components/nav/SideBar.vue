@@ -26,6 +26,7 @@ export default {
       ['Collapse', '/doc/collapse'],
       ['Treeview', '/doc/treeview'],
       ['Pagination', '/doc/pagination'],
+      ['Transfer', '/doc/transfer'],
     ];
     onMounted(()=>{
       filterDom.value = document.querySelector('.filter')

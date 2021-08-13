@@ -9,6 +9,8 @@ import CollapseDemo from './components/CollapseDemo.vue';
 import TabsDemo from './components/TabsDemo.vue';
 import TreeviewDemo from './components/TreeviewDemo.vue';
 import PaginationDemo from './components/PaginationDemo.vue';
+import TransferDemo from './components/TransferDemo.vue';
+
 
 import Markdown from './components/Markdown.vue';
 
@@ -37,6 +39,7 @@ export const router = createRouter({
         {path: 'collapse', component: CollapseDemo},
         {path: 'treeview', component: TreeviewDemo},
         {path: 'pagination', component: PaginationDemo},
+        {path: 'transfer', component: TransferDemo},
       ],
     },
   ],
