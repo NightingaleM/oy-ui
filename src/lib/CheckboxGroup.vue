@@ -1,7 +1,12 @@
 <template>
   <div id="oy-checkbox-group">
-    {{ values }}
-    <div class="oy-option"></div>
+    <div class="oy-option">
+      <Checkbox :indeterminate="checkAllStatus==='indeterminate'"
+                :checked="checkAllStatus ==='checkAll'"
+                @change="checkAllOrCancel">
+        <span>全选</span>
+      </Checkbox>
+    </div>
     <Checkbox :checked="values.indexOf(item.value) >=0"
               v-for="item in list" :key="item.label"
               :info="item"
@@ -11,7 +16,7 @@
   </div>
 </template>
 <script lang="ts">
-import {ref, watchEffect} from 'vue';
+import {computed, ref, watchEffect} from 'vue';
 import Checkbox from './Checkbox.vue';
 
 export default {
@@ -47,6 +52,16 @@ export default {
       }
     };
     const list = initList(props.options);
+    const checkAllStatus = computed(() => {
+      const l = values.value.length;
+      if (!l) {
+        return 'empty';
+      } else if (l === props.options.length) {
+        return 'checkAll';
+      } else {
+        return 'indeterminate';
+      }
+    });
     const values = ref([...props.value]);
     const checkHandle = (v) => {
       const index = values.value.indexOf(v);
@@ -59,7 +74,25 @@ export default {
     watchEffect(() => {
       emit('checkChange', values.value);
     });
+    const checkAllOrCancel = (v) => {
+      switch (checkAllStatus.value) {
+        case 'empty':
+          console.log('empty');
+          values.value = list.map(e => e.value);
+          break;
+        case 'checkAll':
+          console.log('checkAll');
+          values.value = [];
+          break;
+        case 'indeterminate':
+          console.log('indeterminate');
+          values.value = list.map(e => e.value);
+          break;
+      }
+    };
     return {
+      checkAllStatus,
+      checkAllOrCancel,
       list,
       values, checkHandle
     };
@@ -107,67 +140,6 @@ export default {
 
   }
 
-  .oy-checkbox-selected {
-    .oy-checkbox-input {
-      .oy-checkbox-input-inner {
-        background-color: #00bcd4;
-        border: 1px solid #00bcd4;
-
-        svg {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          display: inline-block;
-          width: 75%;
-          height: 75%;
-          background-color: #00bcd4;
-          color: #fff;
-          animation: oy-icon-wave-show 0.3s forwards ease-out;
-        }
-
-        &:after {
-          content: '';
-          border: 1px solid #00bcd4;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 100%;
-          height: 100%;
-          border-radius: 2px;
-          animation: oy-border-wave-show 0.3s forwards ease-in;
-        }
-      }
-    }
-  }
-}
-
-@keyframes oy-icon-wave-show {
-  0% {
-    width: 10%;
-  }
-  75% {
-    width: 130%;
-  }
-  100% {
-    width: 75%;
-  }
-}
-
-@keyframes oy-border-wave-show {
-  0% {
-    width: 100%;
-    height: 100%;
-    opacity: 1;
-    border: 1px solid #00bcd4;
-  }
-  100% {
-    border: 2px solid #00bcd4;
-    width: 130%;
-    height: 130%;
-    opacity: 0;
-  }
 }
 
 </style>

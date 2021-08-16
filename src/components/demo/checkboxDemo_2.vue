@@ -14,7 +14,6 @@ export default {
   },
   setup() {
     const changeHandle = (v) => {
-      console.log(v);
       value.value = v;
     };
     const value = ref(['我']);

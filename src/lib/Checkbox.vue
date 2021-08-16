@@ -1,5 +1,6 @@
 <template>
-  <label :class="['oy-checkbox-wrapper',{'oy-checkbox-selected': checked}]">
+  <label
+      :class="['oy-checkbox-wrapper',{'oy-checkbox-selected': checked},{'oy-checkbox-indeterminate': indeterminate}]">
       <span class="oy-checkbox-input">
         <input type="checkbox" :value="info.value" @change="checkHandle(info.value)">
         <span class="oy-checkbox-input-inner">
@@ -26,6 +27,7 @@ export default defineComponent({
     indeterminate: {
       type: Boolean,
       default: false,
+      require: false,
     },
     info: {
       type: Object as () => checkboxInfoInterface,
@@ -43,13 +45,18 @@ export default defineComponent({
   },
   setup(props, context) {
     const status = ref(props.checked);
+    watchEffect(()=>{
+      status.value = props.checked
+    })
     const {emit} = context;
     const checkHandle = (v) => {
       status.value = !status.value;
       if (props.info?.__defaultProps) {
         emit('checkChange', status.value);
+        // emit('change', status.value);
       } else {
         emit('checkChange', v);
+        // emit('change', v);
       }
     };
     return {
@@ -138,6 +145,41 @@ export default defineComponent({
   }
 }
 
+.oy-checkbox-indeterminate {
+  .oy-checkbox-input {
+    .oy-checkbox-input-inner {
+      border: 1px solid #00bcd4;
+
+      &:before {
+        background-color: #00bcd4;
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60%;
+        height: 60%;
+        border-radius: 2px;
+        animation: oy-background-wave-show-half 0.3s forwards ease-in;
+      }
+
+      &:after {
+        content: '';
+        border: 1px solid #00bcd4;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: 2px;
+        animation: oy-border-wave-show-2 0.3s forwards ease;
+      }
+    }
+  }
+}
+
 @keyframes oy-icon-wave-show {
   0% {
     width: 10%;
@@ -162,6 +204,35 @@ export default defineComponent({
     width: 130%;
     height: 130%;
     opacity: 0;
+  }
+}
+@keyframes oy-border-wave-show-2 {
+  0% {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    border: 1px solid #00bcd4;
+  }
+  100% {
+    border: 2px solid #00bcd4;
+    width: 130%;
+    height: 130%;
+    opacity: 0;
+  }
+}
+
+@keyframes oy-background-wave-show-half {
+  0% {
+    width: 10%;
+    height: 10%;
+  }
+  75% {
+    width: 90%;
+    height: 90%;
+  }
+  100% {
+    width: 60%;
+    height: 60%;
   }
 }
 

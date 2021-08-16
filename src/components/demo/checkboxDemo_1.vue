@@ -4,6 +4,8 @@
 <template>
   {{ isChecked ? '^3^' : 'QAQ' }}
   <Checkbox :checked="isChecked" @checkChange="checkboxHandel">选择吗？</Checkbox>
+  <button @click="isChecked=!isChecked">dafad</button>
+  <Checkbox :indeterminate="true">选择吗？</Checkbox>
 </template>
 <script lang="ts">
 import Checkbox from '../../lib/Checkbox.vue';
