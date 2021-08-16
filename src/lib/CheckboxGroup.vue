@@ -1,17 +1,16 @@
 <template>
   <div id="oy-checkbox-group">
-    <div class="oy-option">
+    <div v-if="checkAllBox" class="oy-option">
       <Checkbox :indeterminate="checkAllStatus==='indeterminate'"
                 :checked="checkAllStatus ==='checkAll'"
-                @change="checkAllOrCancel">
-        <span>全选</span>
+                @change="checkAllOrCancel">全选
       </Checkbox>
     </div>
-    <Checkbox :checked="values.indexOf(item.value) >=0"
+    <Checkbox :block="block" :checked="values.indexOf(item.value) >=0"
               v-for="item in list" :key="item.label"
               :info="item"
-              @checkChange="checkHandle">
-      <span>{{ item.label }}</span>
+              :disabled="item.disabled"
+              @checkChange="checkHandle">{{ item.label }}
     </Checkbox>
   </div>
 </template>
@@ -22,6 +21,14 @@ import Checkbox from './Checkbox.vue';
 export default {
   components: {Checkbox},
   props: {
+    checkAllBox:{
+      type: Boolean,
+      default: false
+    },
+    block: {
+      type: Boolean,
+      default: false
+    },
     options: {
       type: Array,
       validator: function (value: []) {
@@ -53,10 +60,12 @@ export default {
     };
     const list = initList(props.options);
     const checkAllStatus = computed(() => {
-      const l = values.value.length;
-      if (!l) {
+
+      const vl = values.value
+      const r_ol = props.options.filter(e=>(!e?.disabled) ?? true).map(e=>e.value)
+      if (!vl) {
         return 'empty';
-      } else if (l === props.options.length) {
+      } else if (new Set([...vl,...r_ol]).size === vl.length) {
         return 'checkAll';
       } else {
         return 'indeterminate';
@@ -77,16 +86,14 @@ export default {
     const checkAllOrCancel = (v) => {
       switch (checkAllStatus.value) {
         case 'empty':
-          console.log('empty');
           values.value = list.map(e => e.value);
           break;
         case 'checkAll':
-          console.log('checkAll');
-          values.value = [];
+          const op = props.options.filter(e=>(!e?.disabled) ?? true).map(e=>e.value)
+          values.value = values.value.filter(e=>op.indexOf(e)<0);
           break;
         case 'indeterminate':
-          console.log('indeterminate');
-          values.value = list.map(e => e.value);
+          values.value = Array.from(new Set([...values.value,...list.filter(e=>(!e?.disabled) ?? true).map(e => e.value)]));
           break;
       }
     };
@@ -102,43 +109,6 @@ export default {
 <style lang="less">
 #oy-checkbox-group {
 
-  .oy-checkbox-wrapper {
-    display: flex;
-    align-items: center;
-
-    span {
-      padding: 0px 15px;
-    }
-
-    .oy-checkbox-input {
-      position: relative;
-      width: 0;
-      height: 0;
-      margin: 0;
-      padding: 0;
-
-      input {
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-
-      .oy-checkbox-input-inner {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 0;
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        border: 1px solid #ccc;
-        border-radius: 2px;
-        //overflow: hidden;
-
-      }
-    }
-
-  }
 
 }
 

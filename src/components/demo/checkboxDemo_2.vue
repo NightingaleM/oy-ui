@@ -1,28 +1,18 @@
 <demo>
-<h2>基本使用</h2>
+<h2>禁用</h2>
+<p>添加 <code>disabled</code></p>
 </demo>
 <template>
-  <CheckboxGroup @checkChange="changeHandle" :options="options" :value="value"></CheckboxGroup>
+  <Checkbox disabled :checked="true">选择吗？</Checkbox>
+  <Checkbox disabled :checked="false">选择吗？</Checkbox>
 </template>
 <script lang="ts">
-import CheckboxGroup from '../../lib/CheckboxGroup.vue';
-import {ref} from 'vue';
+import Checkbox from '../../lib/Checkbox.vue';
+import {defineComponent, ref} from 'vue';
 
-export default {
+export default defineComponent({
   components: {
-    CheckboxGroup
+    Checkbox
   },
-  setup() {
-    const changeHandle = (v) => {
-      value.value = v;
-    };
-    const value = ref(['我']);
-    const options = ['你', '我', '他'];
-    return {
-      changeHandle,
-      value,
-      options
-    };
-  }
-};
+});
 </script>
