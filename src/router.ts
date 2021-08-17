@@ -10,7 +10,7 @@ import TabsDemo from './components/TabsDemo.vue';
 import TreeviewDemo from './components/TreeviewDemo.vue';
 import PaginationDemo from './components/PaginationDemo.vue';
 import TransferDemo from './components/TransferDemo.vue';
-
+import CheckboxDemo from './components/CheckboxDemo.vue'
 
 import Markdown from './components/Markdown.vue';
 
@@ -33,6 +33,7 @@ export const router = createRouter({
         {path: 'get-start', component: md(getStart)},
         {path: 'install', component: md(install)},
         {path: 'switch', component: SwitchDemo},
+        {path: 'checkbox', component: CheckboxDemo},
         {path: 'button', component: ButtonDemo},
         {path: 'dialog', component: DialogDemo},
         {path: 'tabs', component: TabsDemo},
