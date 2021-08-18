@@ -3,7 +3,7 @@
     <div v-if="checkAllBox" class="oy-option">
       <Checkbox :indeterminate="checkAllStatus==='indeterminate'"
                 :checked="checkAllStatus ==='checkAll'"
-                @change="checkAllOrCancel">全选
+                @checkChange="checkAllOrCancel">全选
       </Checkbox>
     </div>
     <Checkbox :block="block" :checked="values.indexOf(item.value) >=0"
@@ -73,9 +73,10 @@ export default {
     });
     const values = ref([...props.value]);
     const checkHandle = (v) => {
-      const index = values.value.indexOf(v);
-      if (index < 0) {
-        values.value.push(v);
+      const {status,label} = v
+      const index = values.value.indexOf(label);
+      if ( status && index < 0) {
+        values.value.push(label);
       } else {
         values.value.splice(index, 1);
       }
@@ -84,6 +85,8 @@ export default {
       emit('checkChange', values.value);
     });
     const checkAllOrCancel = (v) => {
+      console.log('??');
+      console.log(checkAllStatus.value);
       switch (checkAllStatus.value) {
         case 'empty':
           values.value = list.map(e => e.value);

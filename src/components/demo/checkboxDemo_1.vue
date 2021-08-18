@@ -26,7 +26,8 @@ export default defineComponent({
   setup() {
     const isChecked = ref(false);
     const checkboxHandel = v => {
-      isChecked.value = v;
+      const {status, label} = v;
+      isChecked.value = status;
     };
     return {
       isChecked,

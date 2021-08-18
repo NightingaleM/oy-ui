@@ -6,8 +6,8 @@
 </div>
 </demo>
 <template>
-  <Checkbox :checked="true" >选了</Checkbox>
-  <Checkbox indeterminate >没全</Checkbox>
+  <Checkbox :checked="true">选了</Checkbox>
+  <Checkbox indeterminate>没全</Checkbox>
   <p>------------------------------</p>
   <CheckboxGroup check-all-box @checkChange="changeHandle" :options="options" :value="value"></CheckboxGroup>
 </template>
@@ -18,13 +18,14 @@ import {ref} from 'vue';
 
 export default {
   components: {
-    CheckboxGroup,Checkbox
+    CheckboxGroup, Checkbox
   },
   setup() {
     const changeHandle = (v) => {
-      value.value = v;
+      const {status, label} = v;
+      value.value = status;
     };
-    const value = ref(['上厕所','睡觉', '吃饭']);
+    const value = ref(['上厕所', '睡觉', '吃饭']);
     // 只是用于展示可以的写法，代码规范自己注意
     const options = [
       {value: '上厕所', label: '上厕所'},

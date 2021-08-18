@@ -22,12 +22,14 @@ export default {
   },
   setup() {
     const changeHandle1 = (v) => {
-      value1.value = v;
+      const {status, label} = v;
+      value1.value = status;
     };
     const value1 = ref(['你']);
     const options1 = ['你', '我', '他'];
     const changeHandle2 = (v) => {
-      value1.value = v;
+      const {status, label} = v;
+      value2.value = status;
     };
     const value2 = ref(['睡觉', '吃饭']);
     // 只是用于展示可以的写法，代码规范自己注意

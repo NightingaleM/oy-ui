@@ -3,7 +3,7 @@
     <label
         :class="['oy-checkbox-wrapper',{'oy-checkbox-selected': checked},{'oy-checkbox-indeterminate': indeterminate},{'oy-checkbox-disabled': disabled}]">
       <span class="oy-checkbox-input">
-        <input :disabled="disabled" type="checkbox" :value="info.value" @change="checkHandle(info.value)">
+        <input :disabled="disabled" type="checkbox" :value="info.value" @change.stop="checkHandle(info.value)">
         <span class="oy-checkbox-input-inner">
           <svg class="icon" aria-hidden="true" v-show="checked">
             <use xlink:href="#icon-zhengque"></use>
@@ -60,10 +60,16 @@ export default defineComponent({
       if (props.disabled) return;
       status.value = !status.value;
       if (props.info?.__defaultProps) {
-        emit('checkChange', status.value);
+        emit('checkChange', {
+          status: status.value,
+          label:context.slots.default()[0].children.trim()
+        });
         // emit('change', status.value);
       } else {
-        emit('checkChange', v);
+        emit('checkChange', {
+          status: status.value,
+          label: v
+        });
         // emit('change', v);
       }
     };

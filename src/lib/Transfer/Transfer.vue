@@ -1,66 +1,102 @@
 <template>
-  <div class="oy-transfer">
-    <div class="oy-transfer-box oy-left">
-      <div class="oy-transfer-box-header"></div>
-      <div class="oy-list" @drop="drop($event)" @dragover="allowDrop($event)">
-        <input type="text" v-model="leftKeyword">
-        <div :class="['oy-item','oy-item-drag',`oy-item-${i}`]" v-for="i in filtrateLeftList" :key="i" draggable="true"
-             @dragstart="drag($event,i)">
-          拖动试试-{{ i }}
-        </div>
-      </div>
+  <div :class="['oy-transfer',`oy-transfer-${R}`]">
+    <div class="oy-transfer-box oy-left" :style="listStyle">
+      <TransferList
+          :checkAll='checkAll'
+          :search='search'
+          :R='R'
+          :title="titles[0]??null"
+          :list="leftList"
+          @oy-drop="drop"
+          v-model:checkList="leftCheckList"
+      ></TransferList>
     </div>
-    <div class="oy-transfer-box oy-right">
-      <div class="oy-transfer-box-header"></div>
-      <div class="oy-list" @drop="drop($event)" @dragover="allowDrop($event)">
-        <input type="text" v-model="rightKeyword">
-        <div :class="['oy-item',`oy-item-${i}`]" v-for="i in filtrateRightList" :key="i" draggable="true"
-             @dragstart="drag($event,i)">
-          拖动试试-{{ i }}
-        </div>
-      </div>
+    <div class="oy-transfer-option">
+      <Button theme="primary" size="mini" @click="migration('toRight')">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-you"></use>
+        </svg>
+      </Button>
+      <Button theme="primary" size="mini" @click="migration('toLeft')">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-zuo"></use>
+        </svg>
+      </Button>
+    </div>
+    <div class="oy-transfer-box oy-right" :style="listStyle">
+      <TransferList
+          :checkAll='checkAll'
+          :search='search'
+          :R='R'
+          :title="titles[1]??null"
+          :list="rightList"
+          @oy-drop="drop"
+          v-model:checkList="rightCheckList"
+      ></TransferList>
     </div>
   </div>
 </template>
 <script lang="ts">
-import {computed, ref, watchEffect} from 'vue';
+import {computed, ref, watch, watchEffect} from 'vue';
+import Checkbox from '../Checkbox.vue';
+import TransferList from './TransferList.vue';
+import Button from '../Button.vue';
 
 export default {
+  components: {
+    Button,
+    TransferList,
+    Checkbox
+  },
   props: {
-    dataSource: Array,
-    selectedKeys: Array,
+    checkAll: {
+      type: Boolean,
+      default: false
+    },
+    search: {
+      type: Boolean,
+      default: false
+    },
+    listStyle: {
+      type: Object,
+      default: {
+        height: '300px',
+        width: '200px'
+      }
+    },
+    titles: {
+      type: Array
+    },
+    dataSource: {
+      type: Array,
+      require: true
+    },
+    selectedKeys: {
+      type: Array,
+      require: true
+    },
     dragDrop: {
       type: Boolean,
       default: false
     },
   },
+  emits: ['update:selectedKeys', 'change'],
   setup(props, {emit}) {
+    const R = Math.random().toString(36).substr(2, 4);
     const leftList = ref(props.dataSource.map(e => e.key));
     const rightList = ref([...props.selectedKeys]);
-    const leftKeyword = ref('');
-    const rightKeyword = ref('');
-    const filtrateLeftList = computed(() => {
-      if (!leftKeyword.value) return leftList.value;
-      return leftList.value.filter(e => e.match(leftKeyword.value));
-    });
-    const filtrateRightList = computed(() => {
-      if (!rightKeyword.value) return rightList.value;
-      return rightList.value.filter(e => e.match(rightKeyword.value));
-    });
+    const leftCheckList = ref([]);
+    const rightCheckList = ref([]);
     watchEffect(() => {
+      emit('update:selectedKeys', rightList.value);
+    });
+    watch(rightList.value, () => {
       emit('change', rightList.value);
     });
-
-    const allowDrop = (ev) => {
-      ev.preventDefault();
-    };
-
-    const drag = (ev, key) => {
-      ev.dataTransfer.setData('Text', `oy-item-${key}`);
-    };
-
     const drop = (ev) => {
       ev.preventDefault();
+      const _R = ev.dataTransfer.getData('Module_Key');
+      if (!findParent(ev.target, `oy-transfer-${_R}`)) return;
       const data = ev.dataTransfer.getData('Text');
       const key = data.replace('oy-item-', '');
       const direction = !!findParent(ev.target.parentElement, 'oy-left') ? 'left' : 'right';
@@ -68,7 +104,7 @@ export default {
       const rightIndex = rightList.value.indexOf(key);
       // 如果放置目标是item，则认定为需要调整顺序
       const orderItem = findParent(ev.target, 'oy-item');
-      const targetKey = !!orderItem ? [...orderItem.classList].find(e => !!e.match(/oy\-item\-./g)).replace('oy-item-', '') : null;
+      const targetKey = !!orderItem ? [...orderItem.classList].find(e => !!e.match(/oy\-item\-key\-./g)).replace('oy-item-key-', '') : null;
       const targetIndex = !!orderItem ? direction === 'left' ? leftList.value.indexOf(targetKey) : rightList.value.indexOf(targetKey) : null;
       switch (direction) {
         case 'left':
@@ -99,11 +135,23 @@ export default {
       }
     };
 
+    const migration = direction => {
+      if (direction === 'toLeft') {
+        leftList.value.push(...rightCheckList.value);
+        rightList.value = rightList.value.filter(e => rightCheckList.value.indexOf(e) < 0);
+        rightCheckList.value = [];
+      } else {
+        rightList.value.push(...leftCheckList.value);
+        leftList.value = leftList.value.filter(e => leftCheckList.value.indexOf(e) < 0);
+        leftCheckList.value = [];
+      }
+    };
     return {
-      leftKeyword, leftList,
-      rightKeyword, rightList,
-      filtrateLeftList, filtrateRightList,
-      allowDrop, drag, drop
+      R,
+      migration,
+      leftList, rightList, drop,
+      leftCheckList,
+      rightCheckList
     };
   }
 };
@@ -113,34 +161,16 @@ export default {
 <style lang="scss">
 .oy-transfer {
   display: flex;
+  user-select: none;
 
   .oy-transfer-box {
-    flex: 1;
-
-    .oy-list {
-      border: 1px solid #ccc;
-      padding-left: 5px;
-      padding-right: 5px;
-      padding-bottom: 30px;
-
-      .oy-item {
-        margin: 5px;
-        border: 1px dashed #ccc;
-
-        //&:hover {
-        //  background-color: rgba(212, 134, 54, 0.4);
-        //  border-bottom: 2px solid rgba(212, 134, 54, 0.9);
-        //}
-      }
-    }
   }
 
-  .oy-left {
-
-  }
-
-  .oy-right {
-
+  .oy-transfer-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>
