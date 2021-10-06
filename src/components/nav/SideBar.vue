@@ -28,6 +28,7 @@ export default {
       ['Treeview', '/doc/treeview'],
       ['Pagination', '/doc/pagination'],
       ['Transfer', '/doc/transfer'],
+      ['Lazy', '/doc/lazy'],
     ];
     onMounted(()=>{
       filterDom.value = document.querySelector('.filter')

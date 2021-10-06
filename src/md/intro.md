@@ -20,3 +20,5 @@ Oy-ui 是一款基于Vue3 和 TypeScript开发的 UI 组件库。
 *目前已完成`Dialog`、`Button`、`Switch`、`Tabs`这四个组件，之后将继续补充。若有任何建议或意见欢迎[反馈](https://github.com/NightingaleM/oy-ui/issues)*
 
 - 2020/11/30 更新`Collapse`组件。
+
+- 2021/10/06 更新`Lazy`组件。
