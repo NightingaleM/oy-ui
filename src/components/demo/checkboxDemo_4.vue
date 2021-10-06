@@ -12,8 +12,8 @@
   <CheckboxGroup check-all-box @checkChange="changeHandle" :options="options" :value="value"></CheckboxGroup>
 </template>
 <script lang="ts">
-import CheckboxGroup from '../../lib/CheckboxGroup.vue';
-import Checkbox from '../../lib/Checkbox.vue';
+import CheckboxGroup from '../../lib/Checkbox/CheckboxGroup.vue';
+import Checkbox from '../../lib/Checkbox/Checkbox.vue';
 import {ref} from 'vue';
 
 export default {

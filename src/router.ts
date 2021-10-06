@@ -7,7 +7,7 @@ import ButtonDemo from './components/ButtonDemo.vue';
 import DialogDemo from './components/DialogDemo.vue';
 import CollapseDemo from './components/CollapseDemo.vue';
 import TabsDemo from './components/TabsDemo.vue';
-import TreeviewDemo from './components/TreeviewDemo.vue';
+import TreeViewDemo from './components/TreeViewDemo.vue';
 import PaginationDemo from './components/PaginationDemo.vue';
 import TransferDemo from './components/TransferDemo.vue';
 import CheckboxDemo from './components/CheckboxDemo.vue'
@@ -39,7 +39,7 @@ export const router = createRouter({
         {path: 'dialog', component: DialogDemo},
         {path: 'tabs', component: TabsDemo},
         {path: 'collapse', component: CollapseDemo},
-        {path: 'treeview', component: TreeviewDemo},
+        {path: 'TreeView', component: TreeViewDemo},
         {path: 'pagination', component: PaginationDemo},
         {path: 'transfer', component: TransferDemo},
         {path: 'lazy', component: LazyDemo},

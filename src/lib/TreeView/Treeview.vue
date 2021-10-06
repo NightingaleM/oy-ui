@@ -1,10 +1,10 @@
 <template>
-  <ul class="oy-treeview-root">
+  <ul class="oy-TreeView-root">
     <li
-        :class="['oy-treeview-node',{'oy-treeview-click':node.children}]"
+        :class="['oy-TreeView-node',{'oy-TreeView-click':node.children}]"
         v-for="(node,index) in items"
         @click.stop="showUpHandle(node.id)">
-      <div class="oy-treeview-text">
+      <div class="oy-TreeView-text">
         <svg class="icon" aria-hidden="true" v-show="node.children && showMap[node[primaryKey]]">
           <use xlink:href="#icon-zhankai"></use>
         </svg>
@@ -21,7 +21,7 @@
 
 </template>
 <script lang="ts">
-import TreeView from './Treeview.vue';
+import TreeView from './TreeView.vue';
 import {ref, watchEffect} from 'vue';
 
 const treeHandle = (item, primaryKey, defaultExpandedKeys) => {
@@ -79,14 +79,14 @@ export default {
 };
 </script>
 <style lang="scss">
-.oy-treeview-root {
+.oy-TreeView-root {
 
-  .oy-treeview-node {
+  .oy-TreeView-node {
     border-left: 1px solid #ccc;
     padding-left: 15px;
     cursor: default;
 
-    .oy-treeview-text {
+    .oy-TreeView-text {
       position: relative;
       padding: 10px 10px 10px 25px;
 
@@ -99,9 +99,9 @@ export default {
     }
   }
 
-  .oy-treeview-click {
+  .oy-TreeView-click {
     cursor: pointer;
-    >.oy-treeview-text{
+    >.oy-TreeView-text{
       &:hover{
         text-decoration: underline;
       }

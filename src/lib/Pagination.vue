@@ -195,10 +195,7 @@ export default {
     }
   }
 }
-</style>
-<style>
 .oy-pagination-small-box .oy-button-main {
   margin: 0;
 }
-
 </style>

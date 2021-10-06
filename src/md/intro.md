@@ -21,7 +21,7 @@ Oy-ui 是一款基于Vue3 和 TypeScript开发的 UI 组件库。
 
 - 2020/11/30 更新`Collapse`组件。
 
-- 2021/01/11 更新`Treeview`组件。
+- 2021/01/11 更新`TreeView`组件。
 
 - 2021/01/13 更新`Pagination`组件。
 

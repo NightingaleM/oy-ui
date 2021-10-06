@@ -15,7 +15,7 @@
 
 </template>
 <script lang="ts">
-import Checkbox from '../../lib/Checkbox.vue';
+import Checkbox from '../../lib/Checkbox/Checkbox.vue';
 import Button from '../../lib/Button.vue';
 import {defineComponent, ref} from 'vue';
 

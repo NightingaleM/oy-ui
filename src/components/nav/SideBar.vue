@@ -25,7 +25,7 @@ export default {
       ['Checkbox', '/doc/checkbox'],
       ['Tabs', '/doc/tabs'],
       ['Collapse', '/doc/collapse'],
-      ['Treeview', '/doc/treeview'],
+      ['TreeView', '/doc/TreeView'],
       ['Pagination', '/doc/pagination'],
       ['Transfer', '/doc/transfer'],
       ['Lazy', '/doc/lazy'],

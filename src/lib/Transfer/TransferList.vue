@@ -27,7 +27,7 @@
   </div>
 </template>
 <script lang="ts">
-import Checkbox from '../Checkbox.vue';
+import Checkbox from '../Checkbox/Checkbox.vue';
 import {computed, ref, watch, watchEffect} from 'vue';
 
 export default {

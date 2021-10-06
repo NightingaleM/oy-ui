@@ -38,7 +38,6 @@ export default {
       menuVisible.value = !menuVisible.value;
     };
     onMounted(() => {
-      console.log();
       setTimeout(()=>{
 
       let t = document.querySelector('.filter-tab')
@@ -50,7 +49,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .fix-side-bar {
   z-index: 2;
   position: fixed;

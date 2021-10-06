@@ -62,7 +62,7 @@ export default defineComponent({
       if (props.info?.__defaultProps) {
         emit('checkChange', {
           status: status.value,
-          label:context.slots.default()[0].children.trim()
+          label: context.slots.default()[0].children.trim()
         });
         // emit('change', status.value);
       } else {
@@ -79,7 +79,7 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="less">
+<style lang="scss">
 .oy-checkbox-box {
   display: inline-block;
 

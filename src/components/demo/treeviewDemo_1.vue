@@ -11,7 +11,7 @@
   <TreeView :items="items" :defaultExpandedKeys="defaultExpandedKeys" primary-key="id"></TreeView>
 </template>
 <script lang="ts">
-import TreeView from '../../lib/Treeview/Treeview.vue';
+import TreeView from '../../lib/TreeView/TreeView.vue';
 import {ref} from 'vue';
 
 export default {

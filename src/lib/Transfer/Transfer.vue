@@ -38,7 +38,7 @@
 </template>
 <script lang="ts">
 import {computed, ref, watch, watchEffect} from 'vue';
-import Checkbox from '../Checkbox.vue';
+import Checkbox from '../Checkbox/Checkbox.vue';
 import TransferList from './TransferList.vue';
 import Button from '../Button.vue';
 

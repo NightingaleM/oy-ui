@@ -13,7 +13,7 @@
   <CheckboxGroup @checkChange="changeHandle2" :options="options2" :value="value2"></CheckboxGroup>
 </template>
 <script lang="ts">
-import CheckboxGroup from '../../lib/CheckboxGroup.vue';
+import CheckboxGroup from '../../lib/Checkbox/CheckboxGroup.vue';
 import {ref} from 'vue';
 
 export default {

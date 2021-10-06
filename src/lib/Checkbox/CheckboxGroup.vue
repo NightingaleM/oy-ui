@@ -85,8 +85,6 @@ export default {
       emit('checkChange', values.value);
     });
     const checkAllOrCancel = (v) => {
-      console.log('??');
-      console.log(checkAllStatus.value);
       switch (checkAllStatus.value) {
         case 'empty':
           values.value = list.map(e => e.value);
@@ -109,10 +107,3 @@ export default {
   }
 };
 </script>
-<style lang="less">
-#oy-checkbox-group {
-
-
-}
-
-</style>

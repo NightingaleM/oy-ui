@@ -44,7 +44,6 @@ export default defineComponent({
   setup(props, context) {
     const slots = context.slots.default();
     const children = [];
-    console.log(slots);
     const {emit} = context;
     const showStatus = ref({});
     slots.forEach(item => {
