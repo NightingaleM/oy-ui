@@ -4,7 +4,7 @@
 </template>
 <script lang="ts">
 
-import TreeViewDemo from './demo/TreeViewDemo_1.vue';
+import TreeViewDemo from './demo/treeViewDemo_1.vue';
 import DemoCard from './public/DemoCard.vue';
 
 export default {
