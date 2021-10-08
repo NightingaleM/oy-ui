@@ -1,6 +1,6 @@
 <template>
   <div class="oy-lazy-box">
-    <div :class="['oy-lazy-target',`oy-lazy-target-${item.key}`]" v-for="item in children" :key="item.key">
+    <div :class="['oy-lazy-target',`oy-lazy-target-key-${item.key}`]" v-for="item in children" :key="item.key">
       <transition :name="transitionName">
         <component v-if="showStatus[item.key]" :is="item"></component>
       </transition>
@@ -47,17 +47,18 @@ export default defineComponent({
     const {emit} = context;
     const showStatus = ref({});
     slots.forEach(item => {
-      if (item.type.toString() === 'Symbol(Fragment)') {
+      if (item.type.toString() === 'Symbol(Fragment)' || (item.type.toString() === 'Symbol()' && item.children instanceof Array)) {
         item.children.forEach(child => {
-          if (!child.key) child.key = Math.random().toString(36).slice(-8);
+          if (child.key === undefined || child.key === null || child.key === '') child.key = Math.random().toString(36).slice(-8);
           showStatus.value[child.key] = false;
-          children.push(child)
+          children.push(child);
         });
       } else {
         if (!item.key) item.key = Math.random().toString(36).slice(-8);
         showStatus.value[item.key] = false;
-        children.push(item)
+        children.push(item);
       }
+
     });
     const options = {
       root: props.root,
@@ -66,7 +67,8 @@ export default defineComponent({
     };
     const callback = (entries, observer) => {
       entries.forEach(entry => {
-        const key = entry.target.__vnode.key;
+        const key = entry.target.className.match(/oy-lazy-target-key-(.*)/)[0].replace('oy-lazy-target-key-','')
+        // const key = entry.target.__vnode.key;
         if (!showStatus.value[key] && entry.isIntersecting) {
           emit('lazyShowOnce', {key: key, entry: entry});
         }
@@ -78,7 +80,7 @@ export default defineComponent({
     onMounted(() => {
       const observer = new IntersectionObserver(callback, options);
       children.forEach(e => {
-        observer.observe(document.querySelector(`.oy-lazy-target-${e.key}`));
+        observer.observe(document.querySelector(`.oy-lazy-target-key-${e.key}`));
       });
       document.querySelectorAll('.oy-lazy-target').forEach(e => {
         e.style['min-height'] = props.minHeight;
