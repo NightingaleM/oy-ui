@@ -29,6 +29,7 @@ export default {
       ['Pagination', '/doc/pagination'],
       ['Transfer', '/doc/transfer'],
       ['Lazy', '/doc/lazy'],
+      ['TimePickers', '/doc/timepickers'],
     ];
     onMounted(()=>{
       filterDom.value = document.querySelector('.filter')

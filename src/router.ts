@@ -10,8 +10,9 @@ import TabsDemo from './components/TabsDemo.vue';
 import TreeViewDemo from './components/TreeViewDemo.vue';
 import PaginationDemo from './components/PaginationDemo.vue';
 import TransferDemo from './components/TransferDemo.vue';
-import CheckboxDemo from './components/CheckboxDemo.vue'
-import LazyDemo from './components/LazyDemo.vue'
+import CheckboxDemo from './components/CheckboxDemo.vue';
+import LazyDemo from './components/LazyDemo.vue';
+import TimePickerDemo from './components/TimePickersDemo.vue';
 
 import Markdown from './components/Markdown.vue';
 
@@ -43,6 +44,7 @@ export const router = createRouter({
         {path: 'pagination', component: PaginationDemo},
         {path: 'transfer', component: TransferDemo},
         {path: 'lazy', component: LazyDemo},
+        {path: 'timepickers', component: TimePickerDemo}
       ],
     },
   ],

@@ -39,7 +39,6 @@ export default {
     };
     onMounted(() => {
       setTimeout(()=>{
-
       let t = document.querySelector('.filter-tab')
       t.className += ' filter'
       },5000)
