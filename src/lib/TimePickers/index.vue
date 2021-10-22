@@ -1,9 +1,15 @@
 <template>
   <div :class="['oy-time-pickers',`oy-time-pickers-key-${random}`]" :style="{width:parseInt(`${width}`)+'px'}">
     <div class="oy-time-pickers-header">
-      <span @click="changeTarget('h')">{{ currentHour ?? '--' }}</span>:<span @click="changeTarget('m')">{{
-        currentMinute ?? '--'
-      }}</span><span v-if="useSeconds" @click="changeTarget('s')">:{{ currentSecond ?? '--' }}</span>
+      <span @click="changeTarget('h')">{{ currentHour ?? '--' }}</span>
+      :
+      <span @click="changeTarget('m')">{{
+          currentMinute ? (currentMinute > 10 ? currentMinute : '0' + currentMinute) : '--'
+        }}</span>
+      <span v-if="useSeconds" @click="changeTarget('s')">:{{
+          currentSecond ? (+currentSecond > 10 ? +currentSecond : '0' + +currentSecond) : '--'
+              ?? '--'
+        }}</span>
     </div>
 
     <div class="oy-time-picker-clock">
@@ -119,11 +125,13 @@ export default {
       return value;
     });
     const panelDom = ref(null);
-    watch([currentHour, currentMinute, currentSecond], () => {
-      if (props.useSeconds && currentHour.value && currentMinute.value && currentSecond.value) {
-        emit('update:picker', `${currentHour.value}:${currentMinute.value}:${currentSecond.value}`);
-      } else if (currentHour.value && currentMinute.value) {
-        emit('update:picker', `${currentHour.value}:${currentMinute.value}`);
+    watch([currentHour, currentMinute, currentSecond,amOrPm], () => {
+      let h = currentHour.value, m = currentMinute.value, s = currentSecond.value;
+      h = props.format === '24hr' ? h : amOrPm.value === 'am' ? h : h + 12;
+      if (props.useSeconds && h && m && s) {
+        emit('update:picker', `${h}:${m > 10 ? m : '0' + m}:${s > 10 ? s : '0' + s}`);
+      } else if (h && m) {
+        emit('update:picker', `${h}:${m > 10 ? m : '0' + m}`);
       }
       ;
     });
