@@ -13,6 +13,7 @@
   <p>-----------------</p>
   --- {{ value2 }} ---
   <TimePickers
+      disabled
       v-model:picker="value2"
       format="ampm"
       use-seconds
@@ -22,7 +23,7 @@
 </template>
 <script lang="ts">
 import TimePickers from '../../lib/TimePickers/index.vue';
-import {ref} from 'vue';
+import {ref, watch} from 'vue';
 
 export default {
   components: {
@@ -31,8 +32,15 @@ export default {
   setup() {
     const allowedHours = v => v % 5;
     const allowedMinutes = v => v > 10 && 50 > v;
-    const value1 = ref(null);
-    const value2 = ref('22:44:00');
+    const value2 = ref('17:01:01');
+    const value1 = ref('22:44:00');
+    watch(value2, () => {
+      console.log(value2.value);
+    });
+    setInterval(() => {
+      const now = new Date();
+      value2.value = `${now.getHours()}:${now.getMinutes() > 10 ? now.getMinutes() : '0' + +now.getMinutes()}:${now.getSeconds() > 10 ? now.getSeconds() : '0' + +now.getSeconds()}`;
+    }, 1000);
     return {
       value1, value2,
       allowedHours,

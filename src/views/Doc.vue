@@ -31,10 +31,11 @@ export default {
 
   .side-bar {
     top: 44px;
-    height: calc(100% - 54px);
+    height: calc(100% - 44px);
     position: fixed;
     top: 44px;
     left: 0;
+    background-color: rgba(255,255,255,0.5);
   }
 
   .nav {
