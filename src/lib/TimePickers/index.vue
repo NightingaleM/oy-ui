@@ -33,7 +33,7 @@
         <span :class="[{'oy-time-picker-ampm-active': amOrPm==='pm'}]"
               @click="setAMPM('pm')">PM</span>
       </div>
-      <div class="oy-time-picker-click-panel-background">
+      <div class="oy-time-picker-click-panel-background" :style="format==='ampm' ? '':'margin-top: 34px;'">
 
         <div class="oy-time-picker-click-panel" @mousedown.capture="pickerEvent">
         <span class="oy-oy-time-picker-needle"
