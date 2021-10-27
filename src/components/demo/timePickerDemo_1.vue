@@ -9,12 +9,12 @@
 <template>
   <p>__{{ value1 }}__</p>
   <div class="box">
-    <TimePickers
+    <timePicker
         class="picker"
         v-model:picker="value1"
         :width="500"
     />
-    <TimePickers
+    <timePicker
         useSeconds
         v-model:picker="value1"
         format="ampm"
@@ -23,12 +23,12 @@
 
 </template>
 <script lang="ts">
-import TimePickers from '../../lib/TimePickers/index.vue';
+import timePicker from '../../lib/timePicker/index.vue';
 import {ref, watch} from 'vue';
 
 export default {
   components: {
-    TimePickers
+    timePicker
   },
   setup() {
     const value1 = ref('10:44:00');

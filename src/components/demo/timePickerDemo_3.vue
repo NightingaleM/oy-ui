@@ -7,7 +7,7 @@
 </demo>
 <template>
   <p>__{{ value1 }}__</p>
-  <TimePickers
+  <timePicker
       v-model:picker="value1"
       :width="500"
       use-seconds
@@ -17,12 +17,12 @@
   />
 </template>
 <script lang="ts">
-import TimePickers from '../../lib/TimePickers/index.vue';
+import timePicker from '../../lib/timePicker/index.vue';
 import {ref, watch} from 'vue';
 
 export default {
   components: {
-    TimePickers
+    timePicker
   },
   setup() {
     const allowedHours = v => v % 5;

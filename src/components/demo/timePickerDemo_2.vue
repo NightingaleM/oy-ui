@@ -6,7 +6,7 @@
 </demo>
 <template>
   <div class="box">
-    <TimePickers
+    <timePicker
         v-model:picker="value1"
         format="ampm"
         disabled
@@ -15,12 +15,12 @@
 
 </template>
 <script lang="ts">
-import TimePickers from '../../lib/TimePickers/index.vue';
+import timePicker from '../../lib/timePicker/index.vue';
 import {ref, watch} from 'vue';
 
 export default {
   components: {
-    TimePickers
+    timePicker
   },
   setup() {
     const value1 = ref('07:05:00');
