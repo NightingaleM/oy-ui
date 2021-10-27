@@ -88,6 +88,13 @@ export default {
       type: Function || Array,
       default: undefined
     },
+    target: {
+      type: String,
+      default: 'h',
+      validator: v => {
+        return ['h', 'm', 's'].indexOf(v) >= 0;
+      }
+    },
     format: {
       type: String,
       default: '24hr',
@@ -114,7 +121,7 @@ export default {
       s: inputValueList[2] ?? null
     });
     const timeType = ref(props.format === '24hr' ? 24 : 12); // 12 24
-    const currentTarget = ref('h'); // h m s
+    const currentTarget = ref(props.target); // h m s
     const PROPS_MAP = {
       h: props.allowedHours,
       m: props.allowedMinutes,
@@ -173,7 +180,6 @@ export default {
       props
     ], () => {
       const {picker} = props;
-      0;
       const inputValueList = picker ? picker.split(':') : [null, null, null];
       amOrPm.value = inputValueList[0] >= 12 ? 'pm' : 'am';
       currentTime.value.h = (inputValueList[0] >= 12 && props.format === 'ampm') ? +inputValueList[0] - 12 : +inputValueList[0];
@@ -199,6 +205,7 @@ export default {
     const changeTarget = type => {
       if (props.disabled) return;
       currentTarget.value = type;
+      context.emit('targetChange', currentTarget.value);
       moveNeedle(currentValue.value);
     };
     const moveNeedle = value => {
@@ -305,7 +312,7 @@ export default {
         let i = (angle + cellAngle / 2) / cellAngle;
         i = +parseInt(i.toString());
         if (i === l) i = 0;
-        if (!pickers[currentTarget.value][i].enabled) return;
+        if (!pickers[currentTarget.value][i]?.enabled) return;
         setCurrentValue(i, next);
         setNeedleStyle(i * cellAngle);
       } else {
@@ -320,9 +327,7 @@ export default {
         if (!pickers[currentTarget.value][i].enabled) return;
         if (i === 0) console.log('Y:', Y, ',X:', X, ',distance:', distance, ',R:', R, ',angle:', angle);
         if (i === 12) console.log('Y:', Y, ',X:', X, ',distance:', distance, ',R:', R, ',angle:', angle);
-        setCurrentValue(i, false);
-        // TODO
-        // setCurrentValue(i, next);
+        setCurrentValue(i, next);
         setNeedleStyle(((i > 11 ? i - 12 : i) * cellAngle), i >= 12);
       }
     };
@@ -391,7 +396,7 @@ export default {
     position: relative;
     width: 100%;
     height: 320px;
-    border: 1px solid #ccc;
+    border: 1px solid #5db1e8;
     border-radius: 0px 0px 4px 4px;
 
     .oy-time-picker-am-pm {
@@ -416,7 +421,7 @@ export default {
 
     .oy-time-picker-click-panel-background {
       border-radius: 50%;
-      background-color: #eee;
+      background-color: #e6f0fa;
       width: 230px;
       height: 230px;
       margin: 0 auto;
