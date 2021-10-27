@@ -1,5 +1,5 @@
 <template>
-  <h2>timePicker 示例</h2>
+  <h2>TimePicker 示例</h2>
   <DemoCard v-for="demo in demos" :component="demo"/>
 </template>
 <script lang="ts">
@@ -13,7 +13,6 @@ export default {
   components: {DemoCard},
   setup() {
     return {
-      // DemoCard,
       demos: [
         timePickerDemo_1, timePickerDemo_2, timePickerDemo_3, timePickerDemo_4
       ]

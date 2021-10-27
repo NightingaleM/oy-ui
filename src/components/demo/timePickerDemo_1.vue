@@ -23,7 +23,7 @@
 
 </template>
 <script lang="ts">
-import timePicker from '../../lib/timePicker/index.vue';
+import timePicker from '../../lib/TimePicker/index.vue';
 import {ref, watch} from 'vue';
 
 export default {

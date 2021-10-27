@@ -12,7 +12,7 @@ import PaginationDemo from './components/PaginationDemo.vue';
 import TransferDemo from './components/TransferDemo.vue';
 import CheckboxDemo from './components/CheckboxDemo.vue';
 import LazyDemo from './components/LazyDemo.vue';
-import TimePickerDemo from './components/timePickerDemo.vue';
+import TimePickerDemo from './components/TimePickerDemo.vue';
 
 import Markdown from './components/Markdown.vue';
 
