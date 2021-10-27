@@ -9,7 +9,6 @@
   <p>__{{ value1 }}__</p>
   <timePicker
       v-model:picker="value1"
-      :width="500"
       use-seconds
       :allowed-hours="allowedHours"
       :allowed-minutes="allowedMinutes"
