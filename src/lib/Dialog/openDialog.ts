@@ -7,7 +7,8 @@ export const OpenDialog = (options) => {
   document.body.appendChild(div);
   const close = () => {
     setTimeout(() => {
-      app.unmount(div);
+      app.unmount();
+      // app.unmount(div);
       div.remove();
     }, 500);
   };

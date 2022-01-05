@@ -31,7 +31,6 @@ export default {
     });
     const selected = ref([]);
     const transferHandle = (data) => {
-      console.log('----------');
       console.log(data);
     };
     return {

@@ -32,7 +32,7 @@ export default {
   components: {Button},
   setup(props) {
     let sourceCode = props.component?.__sourceCode;
-    let title = props.component?.__sourceCodeTitle;
+    let title = props.component?.__sourceCodeTitle ?? '';
 
     let sourceCodeStatus = ref(false);
     const sourceCodeToggle = () => {

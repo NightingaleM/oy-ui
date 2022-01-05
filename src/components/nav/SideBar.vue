@@ -30,6 +30,8 @@ export default {
       ['Transfer', '/doc/transfer'],
       ['Lazy', '/doc/lazy'],
       ['TimePicker', '/doc/timePicker'],
+      ['VirtualList', '/doc/virtualList'],
+
     ];
     onMounted(()=>{
       filterDom.value = document.querySelector('.filter')

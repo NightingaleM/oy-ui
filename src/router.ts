@@ -13,6 +13,7 @@ import TransferDemo from './components/TransferDemo.vue';
 import CheckboxDemo from './components/CheckboxDemo.vue';
 import LazyDemo from './components/LazyDemo.vue';
 import TimePickerDemo from './components/TimePickerDemo.vue';
+import VirtualList from './components/VirtualListDemo.vue';
 
 import Markdown from './components/Markdown.vue';
 
@@ -44,7 +45,8 @@ export const router = createRouter({
         {path: 'pagination', component: PaginationDemo},
         {path: 'transfer', component: TransferDemo},
         {path: 'lazy', component: LazyDemo},
-        {path: 'timePicker', component: TimePickerDemo}
+        {path: 'timePicker', component: TimePickerDemo},
+        {path: 'virtualList', component: VirtualList}
       ],
     },
   ],

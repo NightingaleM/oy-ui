@@ -282,7 +282,6 @@ export default {
       let X = $event.offsetX;
       let Y = $event.offsetY;
       if (target !== panel && ([...target.classList].indexOf('oy-time-picker-item') >= 0)) {
-        console.log(target.offsetLeft, target.offsetTop);
         X = X + target.offsetLeft;
         Y = Y + target.offsetTop;
       } else if ([...target.classList].indexOf('oy-oy-time-picker-needle') >= 0) {
