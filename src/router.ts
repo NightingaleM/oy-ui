@@ -14,6 +14,7 @@ import CheckboxDemo from './components/CheckboxDemo.vue';
 import LazyDemo from './components/LazyDemo.vue';
 import TimePickerDemo from './components/TimePickerDemo.vue';
 import VirtualList from './components/VirtualListDemo.vue';
+import OTPInput from './components/OTPInputDemo.vue';
 
 import Markdown from './components/Markdown.vue';
 
@@ -46,7 +47,8 @@ export const router = createRouter({
         {path: 'transfer', component: TransferDemo},
         {path: 'lazy', component: LazyDemo},
         {path: 'timePicker', component: TimePickerDemo},
-        {path: 'virtualList', component: VirtualList}
+        {path: 'virtualList', component: VirtualList},
+        {path: 'otpInput', component: OTPInput}
       ],
     },
   ],

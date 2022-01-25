@@ -31,6 +31,7 @@ export default {
       ['Lazy', '/doc/lazy'],
       ['TimePicker', '/doc/timePicker'],
       ['VirtualList', '/doc/virtualList'],
+      ['OTP Input', '/doc/otpInput'],
 
     ];
     onMounted(()=>{
