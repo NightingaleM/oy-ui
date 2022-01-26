@@ -6,14 +6,15 @@
   <div>
     <OTPInput v-model:value=value1
               @finish='finished'
+              type="password"
     ></OTPInput>
   </div>
 </template>
 <script lang="ts">
 import OTPInput from '../../lib/OTPInput/index.vue';
-import {ref} from 'vue';
+import {defineComponent, ref} from 'vue';
 
-export default {
+export default defineComponent({
   components: {OTPInput},
   setup() {
     const value1 = ref('');
@@ -25,5 +26,5 @@ export default {
       value1
     };
   }
-};
+});
 </script>

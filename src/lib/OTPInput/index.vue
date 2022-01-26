@@ -1,13 +1,16 @@
 <template>
   <input
       :class="['oy-otp-input',{'oy-otp-input-focus':!trulyBlur}]"
-      type="text" v-for="index in props.length" :value="values[index-1]"
+      type="text" v-for="index in props.length"
+      :value="props.type === 'password'  ?  values[index-1] ? '*':'' : values[index-1]"
       :key="index"
       @input="inputChange($event,index-1)"
       :ref="el=>inputRefs[index-1] = el"
       @focus="focusHandle(index-1)"
       @blur="blurHandle(index-1)"
       @keydown.delete="deleteKeydownHandle($event,index-1)"
+      @keydown.left="leftKeydownHandle($event,index-1)"
+      @keydown.right="rightKeydownHandle($event,index-1)"
   >
 </template>
 <script lang="ts" setup>
@@ -44,7 +47,14 @@ watch(isOnFocus, () => {
     trulyBlur.value = !isOnFocus.value;
   });
 });
+const leftKeydownHandle = (event, index) => {
+  currentInputIndex.value = index === 0 ? 0 : index - 1;
+};
+const rightKeydownHandle = (event, index) => {
+  currentInputIndex.value = index === props.length - 1 ? props.length - 1 : index + 1;
+};
 const deleteKeydownHandle = (event, index) => {
+  // if (event.key !== 'Backspace') return;
   for (let i = index; i < props.length; i++) {
     if (i !== props.length - 1) values.value[i] = values.value[i + 1];
     else values.value[i] = '';
@@ -61,6 +71,7 @@ const blurHandle = index => {
   isOnFocus.value = false;
 };
 const inputChange = (event, index) => {
+  console.log(event);
   if (event.inputType === 'deleteContentBackward') {
     nextTick(() => {
       inputRefs.value[index].value = values.value[index];
