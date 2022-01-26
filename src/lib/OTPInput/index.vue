@@ -2,14 +2,16 @@
   <input
       :class="['oy-otp-input',{'oy-otp-input-focus':!trulyBlur}]"
       type="text" v-for="index in props.length" :value="values[index-1]"
+      :key="index"
       @input="inputChange($event,index-1)"
       :ref="el=>inputRefs[index-1] = el"
-      @focus="focusHandle(index)"
-      @blur="blurHandle(index)"
+      @focus="focusHandle(index-1)"
+      @blur="blurHandle(index-1)"
+      @keydown.delete="deleteKeydownHandle($event,index-1)"
   >
 </template>
 <script lang="ts" setup>
-import {nextTick, onBeforeMount, onMounted, ref, watch} from 'vue';
+import {computed, nextTick, onBeforeMount, onMounted, ref, watch} from 'vue';
 
 interface Props {
   disabled?: boolean;
@@ -30,7 +32,9 @@ const emit = defineEmits<{
 }>();
 
 const inputRefs = ref([]);
-const valueStr = ref('');
+const valueStr = computed(() => {
+  return values.value.join('');
+});
 const values = ref([]);
 const currentInputIndex = ref(0);
 const isOnFocus = ref(false);
@@ -40,27 +44,54 @@ watch(isOnFocus, () => {
     trulyBlur.value = !isOnFocus.value;
   });
 });
+const deleteKeydownHandle = (event, index) => {
+  for (let i = index; i < props.length; i++) {
+    if (i !== props.length - 1) values.value[i] = values.value[i + 1];
+    else values.value[i] = '';
+  }
+  nextTick(() => {
+    currentInputIndex.value = index === 0 ? 0 : index - 1;
+  });
+};
 const focusHandle = index => {
-  currentInputIndex.value = index - 1;
+  currentInputIndex.value = index;
   isOnFocus.value = true;
 };
 const blurHandle = index => {
   isOnFocus.value = false;
 };
 const inputChange = (event, index) => {
+  if (event.inputType === 'deleteContentBackward') {
+    nextTick(() => {
+      inputRefs.value[index].value = values.value[index];
+    });
+    return;
+  }
+
   const data = event.data;
-  values.value[index] = '';
-  values.value[index] = data;
-  valueStr.value = values.value.join('');
-  emit('update:value', valueStr.value);
-  if (currentInputIndex.value === props.length - 1) {
-    emit('finish', valueStr.value);
+  const value = [...event.target.value];
+  if (data) {
+    values.value[index] = '';
+    values.value[index] = data;
+    emit('update:value', valueStr.value);
+    if (currentInputIndex.value === props.length - 1) {
+      emit('finish', valueStr.value);
+    } else {
+      currentInputIndex.value += 1;
+    }
   } else {
-    currentInputIndex.value += 1;
+    for (let i = currentInputIndex.value; i < Math.min(value.length, props.length); i++) {
+      values.value[i] = value[i - currentInputIndex.value];
+    }
+    if (values.value.length === props.length) {
+      emit('finish', valueStr.value);
+      currentInputIndex.value = props.length - 1;
+    } else {
+      currentInputIndex.value = values.value.length;
+    }
   }
 };
 onBeforeMount(() => {
-  valueStr.value = props.value;
   if (props.value?.length) {
     values.value = [...props.value].map(e => e);
   }
@@ -96,6 +127,7 @@ watch(currentInputIndex, () => {
 
 .oy-otp-input-focus {
   border: 2px solid #00bcd4;
+
   &:hover {
     border-color: #00bcd4;
   }

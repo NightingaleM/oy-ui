@@ -16,7 +16,7 @@ import {ref} from 'vue';
 export default {
   components: {OTPInput},
   setup() {
-    const value1 = ref('233');
+    const value1 = ref('');
     const finished = value => {
       console.log('finished: ', value);
     };
