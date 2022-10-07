@@ -7,6 +7,7 @@
       @input="inputChange($event,index-1)"
       :ref="el=>inputRefs[index-1] = el"
       @focus="focusHandle(index-1)"
+      @click="initiativeFocus(index)"
       @blur="blurHandle(index-1)"
       @keydown.delete="deleteKeydownHandle($event,index-1)"
       @keydown.left="leftKeydownHandle($event,index-1)"
@@ -54,14 +55,36 @@ const rightKeydownHandle = (event, index) => {
   currentInputIndex.value = index === props.length - 1 ? props.length - 1 : index + 1;
 };
 const deleteKeydownHandle = (event, index) => {
+  console.log(event, index, props);
   // if (event.key !== 'Backspace') return;
   for (let i = index; i < props.length; i++) {
     if (i !== props.length - 1) values.value[i] = values.value[i + 1];
     else values.value[i] = '';
   }
   nextTick(() => {
+    console.log('?哈？');
     currentInputIndex.value = index === 0 ? 0 : index - 1;
   });
+};
+/**
+ * 主动点击的输入需要判断点击的是不是最后一个空值，
+ * 如果不是则自动跳到最后一个空值再输入，
+ * 如果是则直接从这开始修改
+ * @param index
+ */
+const initiativeFocus = index => {
+  let lastEmptyIndex = index - 1;
+  if (!values.value[lastEmptyIndex]) {
+    for (let i = values.value.length - 1; i >= 0; i--) {
+      if (values.value[i]) {
+        lastEmptyIndex = i + 1;
+        break;
+      }
+    }
+    if (lastEmptyIndex === index) lastEmptyIndex = 0;
+  }
+  currentInputIndex.value = lastEmptyIndex;
+  isOnFocus.value = true;
 };
 const focusHandle = index => {
   currentInputIndex.value = index;
@@ -71,7 +94,6 @@ const blurHandle = index => {
   isOnFocus.value = false;
 };
 const inputChange = (event, index) => {
-  console.log(event);
   if (event.inputType === 'deleteContentBackward') {
     nextTick(() => {
       inputRefs.value[index].value = values.value[index];
@@ -81,6 +103,7 @@ const inputChange = (event, index) => {
 
   const data = event.data;
   const value = [...event.target.value];
+  console.log(event);
   if (data) {
     values.value[index] = '';
     values.value[index] = data;
@@ -88,12 +111,16 @@ const inputChange = (event, index) => {
     if (currentInputIndex.value === props.length - 1) {
       emit('finish', valueStr.value);
     } else {
-      currentInputIndex.value += 1;
+      currentInputIndex.value = index + 1;
     }
-  } else {
+  }
+  if (event.inputType === 'insertFromPaste') {
     for (let i = currentInputIndex.value; i < Math.min(value.length, props.length); i++) {
+      console.log(value[i - currentInputIndex.value]);
+      values.value[i] = ''
       values.value[i] = value[i - currentInputIndex.value];
     }
+    emit('update:value', valueStr.value);
     if (values.value.length === props.length) {
       emit('finish', valueStr.value);
       currentInputIndex.value = props.length - 1;
@@ -112,7 +139,7 @@ onMounted(() => {
   isOnFocus.value = true;
   currentInputIndex.value = 0;
 });
-watch(currentInputIndex, () => {
+watch(currentInputIndex, (v, ov) => {
   inputRefs.value[currentInputIndex.value].focus();
   isOnFocus.value = true;
 });

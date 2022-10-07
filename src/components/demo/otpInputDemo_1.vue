@@ -3,10 +3,11 @@
 </demo>
 
 <template>
+  {{value1}}
   <div>
     <OTPInput v-model:value=value1
               @finish='finished'
-              type="password"
+              type="text"
     ></OTPInput>
   </div>
 </template>
