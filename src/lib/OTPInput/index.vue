@@ -1,18 +1,20 @@
 <template>
   <input
-      :class="['oy-otp-input',{'oy-otp-input-focus':!trulyBlur}]"
-      type="text" v-for="index in props.length"
+      :class="['oy-otp-input',{'oy-otp-input-focus':!trulyBlur},{'oy-otp-input-disabled': props.disabled}]"
+      :type="type==='number' ? 'number':'text'"
+      v-for="index in props.length"
       :value="props.type === 'password'  ?  values[index-1] ? '*':'' : values[index-1]"
       :key="index"
       @input="inputChange($event,index-1)"
       :ref="el=>inputRefs[index-1] = el"
       @focus="focusHandle(index-1)"
-      @click="initiativeFocus(index)"
       @blur="blurHandle(index-1)"
       @keydown.delete="deleteKeydownHandle($event,index-1)"
       @keydown.left="leftKeydownHandle($event,index-1)"
       @keydown.right="rightKeydownHandle($event,index-1)"
+      :disabled="props.disabled"
   >
+  <!--      @click="initiativeFocus(index)"-->
 </template>
 <script lang="ts" setup>
 import {computed, nextTick, onBeforeMount, onMounted, ref, watch} from 'vue';
@@ -25,7 +27,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  disabled: true,
+  disabled: false,
   type: 'text',
   length: 6,
   defaults: ''
@@ -55,14 +57,12 @@ const rightKeydownHandle = (event, index) => {
   currentInputIndex.value = index === props.length - 1 ? props.length - 1 : index + 1;
 };
 const deleteKeydownHandle = (event, index) => {
-  console.log(event, index, props);
   // if (event.key !== 'Backspace') return;
   for (let i = index; i < props.length; i++) {
     if (i !== props.length - 1) values.value[i] = values.value[i + 1];
     else values.value[i] = '';
   }
   nextTick(() => {
-    console.log('?哈？');
     currentInputIndex.value = index === 0 ? 0 : index - 1;
   });
 };
@@ -72,20 +72,21 @@ const deleteKeydownHandle = (event, index) => {
  * 如果是则直接从这开始修改
  * @param index
  */
-const initiativeFocus = index => {
-  let lastEmptyIndex = index - 1;
-  if (!values.value[lastEmptyIndex]) {
-    for (let i = values.value.length - 1; i >= 0; i--) {
-      if (values.value[i]) {
-        lastEmptyIndex = i + 1;
-        break;
-      }
-    }
-    if (lastEmptyIndex === index) lastEmptyIndex = 0;
-  }
-  currentInputIndex.value = lastEmptyIndex;
-  isOnFocus.value = true;
-};
+// const initiativeFocus = index => {
+//   let lastEmptyIndex = index - 1;
+//   if (!values.value[lastEmptyIndex]) {
+//     for (let i = values.value.length - 1; i >= 0; i--) {
+//       console.log(i,!!values.value[i])
+//       if (values.value[i]) {
+//         lastEmptyIndex = i + 1;
+//         break;
+//       }
+//     }
+//     if (lastEmptyIndex === index) lastEmptyIndex = 0;
+//   }
+//   currentInputIndex.value = lastEmptyIndex;
+//   isOnFocus.value = true;
+// };
 const focusHandle = index => {
   currentInputIndex.value = index;
   isOnFocus.value = true;
@@ -103,7 +104,6 @@ const inputChange = (event, index) => {
 
   const data = event.data;
   const value = [...event.target.value];
-  console.log(event);
   if (data) {
     values.value[index] = '';
     values.value[index] = data;
@@ -116,8 +116,7 @@ const inputChange = (event, index) => {
   }
   if (event.inputType === 'insertFromPaste') {
     for (let i = currentInputIndex.value; i < Math.min(value.length, props.length); i++) {
-      console.log(value[i - currentInputIndex.value]);
-      values.value[i] = ''
+      values.value[i] = '';
       values.value[i] = value[i - currentInputIndex.value];
     }
     emit('update:value', valueStr.value);
@@ -135,11 +134,14 @@ onBeforeMount(() => {
   }
 });
 onMounted(() => {
-  inputRefs.value[0].focus();
-  isOnFocus.value = true;
-  currentInputIndex.value = 0;
+  if (!props.disabled) {
+    inputRefs.value[0].focus();
+    isOnFocus.value = true;
+    currentInputIndex.value = 0;
+  }
 });
 watch(currentInputIndex, (v, ov) => {
+  console.log(v, ov);
   inputRefs.value[currentInputIndex.value].focus();
   isOnFocus.value = true;
 });
@@ -161,6 +163,16 @@ watch(currentInputIndex, (v, ov) => {
   &:hover {
     border-color: #1d2c40;
   }
+
+  &[type=number]::-webkit-inner-spin-button,
+  &[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type=number] {
+    -moz-appearance: textfield;
+  }
 }
 
 .oy-otp-input-focus {
@@ -168,6 +180,13 @@ watch(currentInputIndex, (v, ov) => {
 
   &:hover {
     border-color: #00bcd4;
+  }
+}
+.oy-otp-input-disabled {
+  border: 2px solid #999;
+
+  &:hover {
+    cursor: not-allowed;
   }
 }
 </style>
