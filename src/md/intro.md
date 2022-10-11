@@ -34,3 +34,5 @@ Oy-ui 是一款基于Vue3 和 TypeScript开发的 UI 组件库。
 - 2021/10/27 更新`TimePicker`组件。
 
 - 2022/01/05 更新`VirtualList`组件。
+
+- 2022/10/08 更新`OPT Input`组件。
